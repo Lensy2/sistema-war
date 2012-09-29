@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+  <persistence-unit name="sistema-ejbPU" transaction-type="JTA">
+    <jta-data-source>jdbc/sistema</jta-data-source>
+    <class>be.Cambio</class>
+    <class>be.CanjeOrdenCompra</class>
+    <class>be.Cliente</class>
+    <class>be.ColorProducto</class>
+    <class>be.Desarrollador</class>
+    <class>be.DetalleCambioProducto</class>
+    <class>be.DetalleOrdenCompraProducto</class>
+    <class>be.DetalleVentaProducto</class>
+    <class>be.DevolucionLima</class>
+    <class>be.Empleado</class>
+    <class>be.EstadoCanjeOrdenCompra</class>
+    <class>be.EstadoFacturacionOrdenCompra</class>
+    <class>be.EstadoLetrasPagoCanje</class>
+    <class>be.EstadoOrdenCompra</class>
+    <class>be.EstadoProducto</class>
+    <class>be.EstadoVenta</class>
+    <class>be.FacturaCompra</class>
+    <class>be.GastosEconomicos</class>
+    <class>be.IngresoProductoTienda</class>
+    <class>be.IngresosEconomicos</class>
+    <class>be.LetrasPagoCanje</class>
+    <class>be.MaterialProducto</class>
+    <class>be.Mercado</class>
+    <class>be.ModeloProducto</class>
+    <class>be.NotaCredito</class>
+    <class>be.OrdenCompra</class>
+    <class>be.PagoCompraCredito</class>
+    <class>be.PagoVentaCredito</class>
+    <class>be.PrecioProducto</class>
+    <class>be.PrestamoProductoTiendaUsuario</class>
+    <class>be.Producto</class>
+    <class>be.Proveedor</class>
+    <class>be.SalidaProductoTienda</class>
+    <class>be.StockProductoTiendaOrigen</class>
+    <class>be.TallaProducto</class>
+    <class>be.Tienda</class>
+    <class>be.TipoCliente</class>
+    <class>be.TipoProducto</class>
+    <class>be.TipoProveedor</class>
+    <class>be.TipoVenta</class>
+    <class>be.Venta</class>
+    <class>be.DetalleFormulacionInsumos</class>
+    <class>be.Formulacion</class>
+    <class>be.MateriaPrima</class>
+    <class>be.ProduccionAlmacen</class>
+    <class>be.StockMateriaPrimaTiendaOrigen</class>
+    <class>be.UnidadMedida</class>
+    <exclude-unlisted-classes>false</exclude-unlisted-classes>
+    <shared-cache-mode>NONE</shared-cache-mode>
+    <properties/>
+  </persistence-unit>
+</persistence>
