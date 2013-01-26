@@ -43,7 +43,7 @@ and open the template in the editor.
 
 
                 <p:calendar id="feth1" effect="slide" locale="es" value="#{managedBeanReportando.fecha_cierre_caja}" pattern="dd/MM/yyyy"/>
-                <p:commandButton value="Generar Cierre de Caja" action="#{managedBeanReportando.generar_Caja}" update="frm123 frmbutton" actionListener="#{managedBeanReportando.addInfoCaja}"/>
+                <p:commandButton value="Generar Cierre de Caja" action="#{managedBeanReportando.generar_Caja}" update=":frm123 :frmbutton" actionListener="#{managedBeanReportando.addInfoCaja}"/>
             </h:panelGrid>
             <p:separator />
 
