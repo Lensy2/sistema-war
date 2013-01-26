@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="2.0"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="245"/>
+	<property name="ireport.x" value="556"/>
+	<property name="ireport.y" value="460"/>
 	<style name="Title" fontName="Arial" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
 	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
 	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
@@ -160,7 +160,7 @@ order by 3]]>
 				<textField>
 					<reportElement style="Detail" x="27" y="21" width="51" height="12" forecolor="#666666"/>
 					<textElement>
-						<font size="8" isBold="true"/>
+						<font fontName="DejaVu Serif" size="7" isBold="true"/>
 					</textElement>
 					<textFieldExpression class="java.lang.String"><![CDATA[$F{TIPO}]]></textFieldExpression>
 				</textField>
