@@ -28,24 +28,10 @@ import javax.persistence.TemporalType;
 
 /**
  *
- * @author root : Zavaleta De la Cruz Yury Daniel
- * Copyright 2011 Zavaleta De la Cruz Yury Daniel
-
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
-
-       http://www.apache.org/licenses/LICENSE-2.0
-
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
-
+ * @author argos
  */
 @Entity
-@Table(name = "VENTA", catalog = "sistema", schema = "")
+@Table(name = "venta", catalog = "sistema", schema = "")
 @NamedQueries({
     @NamedQuery(name = "Venta.findAll", query = "SELECT v FROM Venta v"),
     @NamedQuery(name = "Venta.findByIdVenta", query = "SELECT v FROM Venta v WHERE v.idVenta = :idVenta"),
@@ -55,7 +41,8 @@ import javax.persistence.TemporalType;
     @NamedQuery(name = "Venta.findByFechaVentaEmision", query = "SELECT v FROM Venta v WHERE v.fechaVentaEmision = :fechaVentaEmision"),
     @NamedQuery(name = "Venta.findByTotalVenta", query = "SELECT v FROM Venta v WHERE v.totalVenta = :totalVenta"),
     @NamedQuery(name = "Venta.findByObservaciones", query = "SELECT v FROM Venta v WHERE v.observaciones = :observaciones"),
-    @NamedQuery(name = "Venta.findByTotalPagosCredito", query = "SELECT v FROM Venta v WHERE v.totalPagosCredito = :totalPagosCredito")})
+    @NamedQuery(name = "Venta.findByTotalPagosCredito", query = "SELECT v FROM Venta v WHERE v.totalPagosCredito = :totalPagosCredito"),
+    @NamedQuery(name = "Venta.findByFacturaRelacionada", query = "SELECT v FROM Venta v WHERE v.facturaRelacionada = :facturaRelacionada")})
 public class Venta implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -86,6 +73,14 @@ public class Venta implements Serializable {
     @Basic(optional = false)
     @Column(name = "TOTAL_PAGOS_CREDITO", nullable = false, precision = 9, scale = 2)
     private BigDecimal totalPagosCredito;
+    @Column(name = "FACTURA_RELACIONADA", length = 50)
+    private String facturaRelacionada;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "venta", fetch = FetchType.LAZY)
+    private List<ContratoFumigacion> contratoFumigacionList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "venta", fetch = FetchType.LAZY)
+    private List<Cambio> cambioList;
+    @OneToMany(mappedBy = "venta", fetch = FetchType.LAZY)
+    private List<PagoVentaCredito> pagoVentaCreditoList;
     @JoinColumn(name = "ID_ESTADO_VENTA", referencedColumnName = "ID_ESTADO_VENTA")
     @ManyToOne(fetch = FetchType.LAZY)
     private EstadoVenta estadoVenta;
@@ -101,16 +96,10 @@ public class Venta implements Serializable {
     @JoinColumn(name = "ID_TIENDA", referencedColumnName = "ID_TIENDA", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Tienda tienda;
-    @OneToMany(mappedBy = "venta", fetch = FetchType.LAZY)
-    private List<PagoVentaCredito> pagoVentaCreditoList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "venta", fetch = FetchType.LAZY)
-    private List<Cambio> cambioList;
-    @OneToMany(mappedBy = "venta", fetch = FetchType.LAZY)
-    private List<NotaCredito> notaCreditoList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "venta", fetch = FetchType.LAZY)
     private List<DetalleVentaProducto> detalleVentaProductoList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "venta", fetch = FetchType.LAZY)
-    private List<ContratoFumigacion> contratoFumigacionList;
+    @OneToMany(mappedBy = "venta", fetch = FetchType.LAZY)
+    private List<NotaCredito> notaCreditoList;
 
     public Venta() {
     }
@@ -194,6 +183,38 @@ public class Venta implements Serializable {
         this.totalPagosCredito = totalPagosCredito;
     }
 
+    public String getFacturaRelacionada() {
+        return facturaRelacionada;
+    }
+
+    public void setFacturaRelacionada(String facturaRelacionada) {
+        this.facturaRelacionada = facturaRelacionada;
+    }
+
+    public List<ContratoFumigacion> getContratoFumigacionList() {
+        return contratoFumigacionList;
+    }
+
+    public void setContratoFumigacionList(List<ContratoFumigacion> contratoFumigacionList) {
+        this.contratoFumigacionList = contratoFumigacionList;
+    }
+
+    public List<Cambio> getCambioList() {
+        return cambioList;
+    }
+
+    public void setCambioList(List<Cambio> cambioList) {
+        this.cambioList = cambioList;
+    }
+
+    public List<PagoVentaCredito> getPagoVentaCreditoList() {
+        return pagoVentaCreditoList;
+    }
+
+    public void setPagoVentaCreditoList(List<PagoVentaCredito> pagoVentaCreditoList) {
+        this.pagoVentaCreditoList = pagoVentaCreditoList;
+    }
+
     public EstadoVenta getEstadoVenta() {
         return estadoVenta;
     }
@@ -234,30 +255,6 @@ public class Venta implements Serializable {
         this.tienda = tienda;
     }
 
-    public List<PagoVentaCredito> getPagoVentaCreditoList() {
-        return pagoVentaCreditoList;
-    }
-
-    public void setPagoVentaCreditoList(List<PagoVentaCredito> pagoVentaCreditoList) {
-        this.pagoVentaCreditoList = pagoVentaCreditoList;
-    }
-
-    public List<Cambio> getCambioList() {
-        return cambioList;
-    }
-
-    public void setCambioList(List<Cambio> cambioList) {
-        this.cambioList = cambioList;
-    }
-
-    public List<NotaCredito> getNotaCreditoList() {
-        return notaCreditoList;
-    }
-
-    public void setNotaCreditoList(List<NotaCredito> notaCreditoList) {
-        this.notaCreditoList = notaCreditoList;
-    }
-
     public List<DetalleVentaProducto> getDetalleVentaProductoList() {
         return detalleVentaProductoList;
     }
@@ -266,12 +263,12 @@ public class Venta implements Serializable {
         this.detalleVentaProductoList = detalleVentaProductoList;
     }
 
-    public List<ContratoFumigacion> getContratoFumigacionList() {
-        return contratoFumigacionList;
+    public List<NotaCredito> getNotaCreditoList() {
+        return notaCreditoList;
     }
 
-    public void setContratoFumigacionList(List<ContratoFumigacion> contratoFumigacionList) {
-        this.contratoFumigacionList = contratoFumigacionList;
+    public void setNotaCreditoList(List<NotaCredito> notaCreditoList) {
+        this.notaCreditoList = notaCreditoList;
     }
 
     @Override

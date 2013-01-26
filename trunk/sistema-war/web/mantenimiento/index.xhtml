@@ -6,7 +6,7 @@ and open the template in the editor.
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-          xmlns:p="http://primefaces.prime.com.tr/ui"  
+          xmlns:p="http://primefaces.org/ui"  
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets">
 <h:head> <meta http-equiv="refresh" content="#{session.maxInactiveInterval};url=../index.jsf" />
@@ -90,7 +90,12 @@ and open the template in the editor.
             <h:commandLink  styleClass="datagrid_centrar" value="Tipo de Clientes" action="#{managedBeanAdministrar.Tipo_Clientes}"/>
             </h:panelGroup>
 
-
+    <h:panelGroup>
+                <h:commandLink title="Zonas" action="#{managedBeanAdministrar.Zona_clientes}"  >
+            <h:graphicImage width="135 px" height="100 px" value="${pageContext.request.contextPath}/images/mapa.png" alt="zonas de clientes" title="" style="border-width:0px;"/>
+            </h:commandLink><br/>
+            <h:commandLink  styleClass="datagrid_centrar" value="Zonas" action="#{managedBeanAdministrar.Zona_clientes}"/>
+            </h:panelGroup>
               
 
 
@@ -129,12 +134,7 @@ and open the template in the editor.
             <h:commandLink  styleClass="datagrid_centrar" value="Precio Productos" action="#{managedBeanAdministrar.PreciProductos}"/>
             </h:panelGroup>
 
-             <h:panelGroup>
-                 <h:commandLink title="Fecha Vencimientos" action="#{managedBeanAdministrar.Vencimientos}"  >
-            <h:graphicImage width="135 px" height="100 px" value="${pageContext.request.contextPath}/images/vencimiento.jpg" alt="" title="" style="border-width:0px;"/>
-            </h:commandLink><br/>
-            <h:commandLink  styleClass="datagrid_centrar" value="Fecha Vencimientos" action="#{managedBeanAdministrar.Vencimientos}"/>
-            </h:panelGroup>
+            
 
 
 
@@ -200,6 +200,10 @@ and open the template in the editor.
             </h:commandLink><br/>
             <h:commandLink  styleClass="datagrid_centrar" value="Conductores" action="#{managedBeanAdministrar.Conductores}"/>
             </h:panelGroup>
+
+
+            
+
 
 
          </h:panelGrid>

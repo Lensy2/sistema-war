@@ -1,3 +1,4 @@
+
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -42,6 +43,7 @@ throw new NullPointerException("component");
 ManagedBeanVenta ventas = (ManagedBeanVenta)vex.getValue(ctx.getELContext());
 Cliente cliente = new Cliente();
 try {
+    ventas.llenar_myclientes();
   cliente =  ventas.getDevuelve_Cliente(new Integer(value));
 } catch( NumberFormatException e ) {
 FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Valor Desconocido- Numero de formato", "Este no es un Cliente" );
@@ -59,8 +61,9 @@ return cliente;
     @Override
     public String getAsString(FacesContext context, UIComponent component, Object value) {
 if (value == null || value.equals("")) {
-            return "";
+            return "NULL";
         } else {
+   // System.out.println("devolviendo al cliente :"+String.valueOf(((Cliente) value).getIdCliente()));
             return String.valueOf(((Cliente) value).getIdCliente());
         }
     }

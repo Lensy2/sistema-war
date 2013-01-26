@@ -28,24 +28,10 @@ import javax.persistence.TemporalType;
 
 /**
  *
- * @author root : Zavaleta De la Cruz Yury Daniel
- * Copyright 2011 Zavaleta De la Cruz Yury Daniel
-
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
-
-       http://www.apache.org/licenses/LICENSE-2.0
-
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
-
+ * @author argos
  */
 @Entity
-@Table(name = "PRODUCTO", catalog = "sistema", schema = "")
+@Table(name = "producto", catalog = "sistema", schema = "")
 @NamedQueries({
     @NamedQuery(name = "Producto.findAll", query = "SELECT p FROM Producto p"),
     @NamedQuery(name = "Producto.findByIdProducto", query = "SELECT p FROM Producto p WHERE p.idProducto = :idProducto"),
@@ -66,11 +52,27 @@ public class Producto implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date fechaIngreso;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "producto", fetch = FetchType.LAZY)
+    private List<DetalleFacturaVentaProducto> detalleFacturaVentaProductoList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "producto", fetch = FetchType.LAZY)
     private List<DetalleAlmacenProductosCostos> detalleAlmacenProductosCostosList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "producto", fetch = FetchType.LAZY)
+    private List<Formulacion> formulacionList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "producto", fetch = FetchType.LAZY)
+    private List<DetalleFumigacionProducto> detalleFumigacionProductoList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "producto", fetch = FetchType.LAZY)
+    private List<DetalleCambioProducto> detalleCambioProductoList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "producto1", fetch = FetchType.LAZY)
+    private List<DetalleCambioProducto> detalleCambioProductoList1;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "producto", fetch = FetchType.LAZY)
+    private List<DetalleOrdenCompraProducto> detalleOrdenCompraProductoList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "producto", fetch = FetchType.LAZY)
+    private List<DevolucionLima> devolucionLimaList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "producto", fetch = FetchType.LAZY)
+    private List<DetalleAlmacenProductos> detalleAlmacenProductosList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "producto", fetch = FetchType.LAZY)
     private List<StockProductoTiendaOrigen> stockProductoTiendaOrigenList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "producto", fetch = FetchType.LAZY)
-    private List<DetalleOrdenCompraProducto> detalleOrdenCompraProductoList;
+    private List<IngresoProductoTienda> ingresoProductoTiendaList;
     @JoinColumn(name = "ID_MATERIAL_PRODUCTO", referencedColumnName = "ID_MATERIAL_PRODUCTO", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private MaterialProducto materialProducto;
@@ -90,27 +92,13 @@ public class Producto implements Serializable {
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private ModeloProducto modeloProducto;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "producto", fetch = FetchType.LAZY)
-    private List<DetalleCambioProducto> detalleCambioProductoList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "producto1", fetch = FetchType.LAZY)
-    private List<DetalleCambioProducto> detalleCambioProductoList1;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "producto", fetch = FetchType.LAZY)
-    private List<DetalleFacturaVentaProducto> detalleFacturaVentaProductoList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "producto", fetch = FetchType.LAZY)
-    private List<DevolucionLima> devolucionLimaList;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "producto", fetch = FetchType.LAZY)
-    private PrecioProducto precioProducto;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "producto", fetch = FetchType.LAZY)
     private List<DetalleVentaProducto> detalleVentaProductoList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "producto", fetch = FetchType.LAZY)
-    private List<DetalleServicioProducto> detalleServicioProductoList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "producto", fetch = FetchType.LAZY)
     private List<SalidaProductoTienda> salidaProductoTiendaList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "producto", fetch = FetchType.LAZY)
-    private List<DetalleAlmacenProductos> detalleAlmacenProductosList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "producto", fetch = FetchType.LAZY)
-    private List<IngresoProductoTienda> ingresoProductoTiendaList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "producto", fetch = FetchType.LAZY)
-    private List<Formulacion> formulacionList;
+    private List<DetalleServicioProducto> detalleServicioProductoList;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "producto", fetch = FetchType.LAZY)
+    private PrecioProducto precioProducto;
 
     public Producto() {
     }
@@ -149,12 +137,76 @@ public class Producto implements Serializable {
         this.fechaIngreso = fechaIngreso;
     }
 
+    public List<DetalleFacturaVentaProducto> getDetalleFacturaVentaProductoList() {
+        return detalleFacturaVentaProductoList;
+    }
+
+    public void setDetalleFacturaVentaProductoList(List<DetalleFacturaVentaProducto> detalleFacturaVentaProductoList) {
+        this.detalleFacturaVentaProductoList = detalleFacturaVentaProductoList;
+    }
+
     public List<DetalleAlmacenProductosCostos> getDetalleAlmacenProductosCostosList() {
         return detalleAlmacenProductosCostosList;
     }
 
     public void setDetalleAlmacenProductosCostosList(List<DetalleAlmacenProductosCostos> detalleAlmacenProductosCostosList) {
         this.detalleAlmacenProductosCostosList = detalleAlmacenProductosCostosList;
+    }
+
+    public List<Formulacion> getFormulacionList() {
+        return formulacionList;
+    }
+
+    public void setFormulacionList(List<Formulacion> formulacionList) {
+        this.formulacionList = formulacionList;
+    }
+
+    public List<DetalleFumigacionProducto> getDetalleFumigacionProductoList() {
+        return detalleFumigacionProductoList;
+    }
+
+    public void setDetalleFumigacionProductoList(List<DetalleFumigacionProducto> detalleFumigacionProductoList) {
+        this.detalleFumigacionProductoList = detalleFumigacionProductoList;
+    }
+
+    public List<DetalleCambioProducto> getDetalleCambioProductoList() {
+        return detalleCambioProductoList;
+    }
+
+    public void setDetalleCambioProductoList(List<DetalleCambioProducto> detalleCambioProductoList) {
+        this.detalleCambioProductoList = detalleCambioProductoList;
+    }
+
+    public List<DetalleCambioProducto> getDetalleCambioProductoList1() {
+        return detalleCambioProductoList1;
+    }
+
+    public void setDetalleCambioProductoList1(List<DetalleCambioProducto> detalleCambioProductoList1) {
+        this.detalleCambioProductoList1 = detalleCambioProductoList1;
+    }
+
+    public List<DetalleOrdenCompraProducto> getDetalleOrdenCompraProductoList() {
+        return detalleOrdenCompraProductoList;
+    }
+
+    public void setDetalleOrdenCompraProductoList(List<DetalleOrdenCompraProducto> detalleOrdenCompraProductoList) {
+        this.detalleOrdenCompraProductoList = detalleOrdenCompraProductoList;
+    }
+
+    public List<DevolucionLima> getDevolucionLimaList() {
+        return devolucionLimaList;
+    }
+
+    public void setDevolucionLimaList(List<DevolucionLima> devolucionLimaList) {
+        this.devolucionLimaList = devolucionLimaList;
+    }
+
+    public List<DetalleAlmacenProductos> getDetalleAlmacenProductosList() {
+        return detalleAlmacenProductosList;
+    }
+
+    public void setDetalleAlmacenProductosList(List<DetalleAlmacenProductos> detalleAlmacenProductosList) {
+        this.detalleAlmacenProductosList = detalleAlmacenProductosList;
     }
 
     public List<StockProductoTiendaOrigen> getStockProductoTiendaOrigenList() {
@@ -165,12 +217,12 @@ public class Producto implements Serializable {
         this.stockProductoTiendaOrigenList = stockProductoTiendaOrigenList;
     }
 
-    public List<DetalleOrdenCompraProducto> getDetalleOrdenCompraProductoList() {
-        return detalleOrdenCompraProductoList;
+    public List<IngresoProductoTienda> getIngresoProductoTiendaList() {
+        return ingresoProductoTiendaList;
     }
 
-    public void setDetalleOrdenCompraProductoList(List<DetalleOrdenCompraProducto> detalleOrdenCompraProductoList) {
-        this.detalleOrdenCompraProductoList = detalleOrdenCompraProductoList;
+    public void setIngresoProductoTiendaList(List<IngresoProductoTienda> ingresoProductoTiendaList) {
+        this.ingresoProductoTiendaList = ingresoProductoTiendaList;
     }
 
     public MaterialProducto getMaterialProducto() {
@@ -221,60 +273,12 @@ public class Producto implements Serializable {
         this.modeloProducto = modeloProducto;
     }
 
-    public List<DetalleCambioProducto> getDetalleCambioProductoList() {
-        return detalleCambioProductoList;
-    }
-
-    public void setDetalleCambioProductoList(List<DetalleCambioProducto> detalleCambioProductoList) {
-        this.detalleCambioProductoList = detalleCambioProductoList;
-    }
-
-    public List<DetalleCambioProducto> getDetalleCambioProductoList1() {
-        return detalleCambioProductoList1;
-    }
-
-    public void setDetalleCambioProductoList1(List<DetalleCambioProducto> detalleCambioProductoList1) {
-        this.detalleCambioProductoList1 = detalleCambioProductoList1;
-    }
-
-    public List<DetalleFacturaVentaProducto> getDetalleFacturaVentaProductoList() {
-        return detalleFacturaVentaProductoList;
-    }
-
-    public void setDetalleFacturaVentaProductoList(List<DetalleFacturaVentaProducto> detalleFacturaVentaProductoList) {
-        this.detalleFacturaVentaProductoList = detalleFacturaVentaProductoList;
-    }
-
-    public List<DevolucionLima> getDevolucionLimaList() {
-        return devolucionLimaList;
-    }
-
-    public void setDevolucionLimaList(List<DevolucionLima> devolucionLimaList) {
-        this.devolucionLimaList = devolucionLimaList;
-    }
-
-    public PrecioProducto getPrecioProducto() {
-        return precioProducto;
-    }
-
-    public void setPrecioProducto(PrecioProducto precioProducto) {
-        this.precioProducto = precioProducto;
-    }
-
     public List<DetalleVentaProducto> getDetalleVentaProductoList() {
         return detalleVentaProductoList;
     }
 
     public void setDetalleVentaProductoList(List<DetalleVentaProducto> detalleVentaProductoList) {
         this.detalleVentaProductoList = detalleVentaProductoList;
-    }
-
-    public List<DetalleServicioProducto> getDetalleServicioProductoList() {
-        return detalleServicioProductoList;
-    }
-
-    public void setDetalleServicioProductoList(List<DetalleServicioProducto> detalleServicioProductoList) {
-        this.detalleServicioProductoList = detalleServicioProductoList;
     }
 
     public List<SalidaProductoTienda> getSalidaProductoTiendaList() {
@@ -285,28 +289,20 @@ public class Producto implements Serializable {
         this.salidaProductoTiendaList = salidaProductoTiendaList;
     }
 
-    public List<DetalleAlmacenProductos> getDetalleAlmacenProductosList() {
-        return detalleAlmacenProductosList;
+    public List<DetalleServicioProducto> getDetalleServicioProductoList() {
+        return detalleServicioProductoList;
     }
 
-    public void setDetalleAlmacenProductosList(List<DetalleAlmacenProductos> detalleAlmacenProductosList) {
-        this.detalleAlmacenProductosList = detalleAlmacenProductosList;
+    public void setDetalleServicioProductoList(List<DetalleServicioProducto> detalleServicioProductoList) {
+        this.detalleServicioProductoList = detalleServicioProductoList;
     }
 
-    public List<IngresoProductoTienda> getIngresoProductoTiendaList() {
-        return ingresoProductoTiendaList;
+    public PrecioProducto getPrecioProducto() {
+        return precioProducto;
     }
 
-    public void setIngresoProductoTiendaList(List<IngresoProductoTienda> ingresoProductoTiendaList) {
-        this.ingresoProductoTiendaList = ingresoProductoTiendaList;
-    }
-
-    public List<Formulacion> getFormulacionList() {
-        return formulacionList;
-    }
-
-    public void setFormulacionList(List<Formulacion> formulacionList) {
-        this.formulacionList = formulacionList;
+    public void setPrecioProducto(PrecioProducto precioProducto) {
+        this.precioProducto = precioProducto;
     }
 
     @Override

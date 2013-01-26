@@ -1,3 +1,4 @@
+
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -7,6 +8,7 @@ package beans;
 
 import bc.DetalleAlmacenProductosFacadeLocal;
 import be.DetalleAlmacenProductos;
+import be.EstadoOrdenSalidaDetalleAlmacenProductos;
 import be.StockProductoTiendaOrigen;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
@@ -36,6 +38,8 @@ import javax.faces.model.SelectItem;
    limitations under the License.
 
  */
+
+
 @ManagedBean
 @SessionScoped
 public class ManagedBeanDetalleAlmacenProductos implements Serializable{
@@ -73,6 +77,26 @@ private HashMap<Integer, DetalleAlmacenProductos> mydetalles = new HashMap<Integ
         this.lista = lista;
     }
 
+    
+    
+    
+    public void llenar_myDetalles(){
+    try {
+
+        
+        for(DetalleAlmacenProductos p: detalleAlmacenProductosFacade.findAll()){
+
+             mydetalles.put(p.getIdDetalleAlmacenProductos(), p);
+           
+
+        }
+        
+       
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+
+}
     public List<SelectItem> DetallesItems(StockProductoTiendaOrigen dt) {
 
           lista = new LinkedList<DetalleAlmacenProductos>();

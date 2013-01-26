@@ -6,7 +6,7 @@ and open the template in the editor.
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-          xmlns:p="http://primefaces.prime.com.tr/ui"  
+          xmlns:p="http://primefaces.org/ui"    
       xmlns:f="http://java.sun.com/jsf/core">
 <h:head>
 <link rel="shortcut icon" href="favicon.ico" /> <title>Sistema Integrado</title>
@@ -65,11 +65,7 @@ and open the template in the editor.
                       <h:outputText value="" />
                        <h:outputText value="" />
 
-                    <h:outputText value="Fecha:" />
-                      <h:outputText value="#{managedBeanFacturaVenta.factura.tienda.ciudad}" />
-                    <h:outputText value="#{managedBeanFacturaVenta.factura.fechaVenta}"  >
-                        <f:convertDateTime pattern="EEEEE dd MMMMM yyyy" />
-                    </h:outputText>
+                    
                   
 
            </h:panelGrid>
@@ -81,13 +77,15 @@ and open the template in the editor.
 
 
 
-                     <h:panelGrid id="pnlg123" columns="2" cellpadding="5">
+                    <h:panelGrid id="pnlg123" columns="2" cellpadding="5">
 
 
                     <h:outputText value="Negocio:" />
                     <h:outputText value="#{managedBeanFacturaVenta.factura.tienda.negocio.nombreNegocio}" />
 
-      
+      <h:outputText value="RUC:" />
+      <h:outputText value="#{managedBeanFacturaVenta.factura.tienda.numeroRuc}" />
+
 
                     <h:outputText value="FACTURA:" />
                     <h:outputText value="#{managedBeanFacturaVenta.bloqueFactura} - #{managedBeanFacturaVenta.numeroFactura}" />
@@ -108,12 +106,19 @@ and open the template in the editor.
 
 
              </h:panelGrid>
-
+                   
 
 
 
         </h:panelGrid>
-
+ <h:panelGrid id="pnlgtre" columns="3" cellpadding="5">
+                        <h:outputText value="Fecha:" />
+                      <h:outputText value="#{managedBeanFacturaVenta.factura.tienda.ciudad}," />
+                    <h:outputText value="#{managedBeanFacturaVenta.factura.fechaVenta}"  >
+                        <f:convertDateTime pattern="EEEEE dd MMMMM yyyy" />
+                    </h:outputText>
+                    </h:panelGrid>
+            
             <p:dataTable var="item" value="#{managedBeanFacturaVenta.lista_detalles_mostrar}" id="detalleslist" >
 
         <f:facet name="header">
@@ -317,7 +322,7 @@ and open the template in the editor.
 </h:outputLink>
     
 <h:outputLink id="lnk" value="#">
-    <p:printer target="fielset" />
+    <p:printer target="frm11:fielset" />
     <p:graphicImage width="45 px" height="40 px" value="/images/imprimir3.jpg" />
 </h:outputLink>
 

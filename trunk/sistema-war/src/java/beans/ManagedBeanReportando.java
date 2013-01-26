@@ -1,3 +1,4 @@
+
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -206,11 +207,17 @@ return "index?faces-redirect=true";
      }
 
  public String CajaEmpleados(){
+     empleado = new Empleado(1);
 return "cierre_caja_empleados";
      }
        public String Consolidado(){
 return "consolidado";
      }
+
+         public String Reportes_servicios(){
+return "reportes_servicios";
+     }
+
     public void addInfo(ActionEvent actionEvent) {
           SimpleDateFormat fecha1 = new SimpleDateFormat("EEEEE dd MMMMM yyyy");
            cadena_fecha1_11 = new StringBuilder( fecha1.format( fecha_inicio ) );
@@ -479,6 +486,10 @@ return "cierre_caja";
           SimpleDateFormat fecha1 = new SimpleDateFormat("EEEEE dd MMMMM yyyy");
            StringBuilder cadena_fecha1 = new StringBuilder( fecha1.format( fecha_cierre_caja ) );
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"El cierre de Caja para el día : ", cadena_fecha1.toString()+ "  Se realizó correctamente."  ));
+    }
+
+  public void addInfoClientesServicios(ActionEvent actionEvent) {
+         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"El Reporte se Generó Correctamente.",""  ));
     }
 
   public void addInfoVencimientos(ActionEvent actionEvent) {
@@ -862,5 +873,67 @@ exporter.exportReport ();
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"El reporte  para  "+ tienda.getNombreTienda() , "  Se realizó correctamente."  ));
 
     }
+
+
+
+
+
+
+
+
+      public void Reporte_clientes_servicios()
+    {
+
+
+                ExternalContext extContext = FacesContext.getCurrentInstance().getExternalContext();
+     // Cargamos el driver JDBC
+    try {
+      Class.forName("com.mysql.jdbc.Driver");
+    }
+    catch (ClassNotFoundException e) {
+      System.out.println("MySQL JDBC Driver not found.");
+      System.exit(1);
+    }
+    //Para iniciar el Logger.
+    //inicializaLogger();
+    try {
+      conn = DriverManager.getConnection(cadena_conexion,"root", password);
+      conn.setAutoCommit(false);
+    }
+    catch (SQLException e) {
+      System.out.println("Error de conexión: " + e.getMessage());
+      System.exit(4);
+    }
+
+    try {
+
+      Map parameters = new HashMap();
+          JasperReport report = JasperCompileManager.compileReport(extContext.getRealPath("//rep_clientes_zona.jrxml"));
+     JasperPrint print = JasperFillManager.fillReport(report, parameters,conn);
+     JasperExportManager.exportReportToPdfFile(print,extContext.getRealPath("//clientes_servicios.pdf"));
+
+
+    }
+    catch (Exception e) {
+      e.printStackTrace();
+    }
+    finally {
+      /*
+       * Cleanup antes de salir
+       */
+      try {
+        if (conn != null) {
+          conn.rollback();
+          System.out.println("ROLLBACK EJECUTADO");
+          conn.close();
+        }
+      }
+      catch (Exception e) {
+        e.printStackTrace();
+      }
+    }
+
+
+            }
 
 }

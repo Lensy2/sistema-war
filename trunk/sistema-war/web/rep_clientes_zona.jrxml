@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="448"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" fontName="Arial" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
+	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<queryString>
+		<![CDATA[SELECT C.NOMBRE_CLIENTE,C.RAZON_SOCIAL,C.GIRO_RUBRO,C.CONTACTO,
+C.TELEFONO,C.CELULAR, T.NOMBRE_TIENDA,V.FECHA_VENTA_EMISION,V.ID_TIPO_VENTA
+,V.OBSERVACIONES,Z.DESCRIPCION_ZONA_CIUDAD FROM VENTA V
+inner join  TIENDA T ON T.ID_TIENDA= V.ID_TIENDA
+INNER JOIN CLIENTE C ON C.ID_CLIENTE=V.ID_CLIENTE
+INNER JOIN ZONA_CIUDAD Z ON C.ID_ZONA_CIUDAD=Z.ID_ZONA_CIUDAD
+
+WHERE V.ID_TIPO_VENTA=3 ORDER BY V.FECHA_VENTA_EMISION]]>
+	</queryString>
+	<field name="NOMBRE_CLIENTE" class="java.lang.String"/>
+	<field name="RAZON_SOCIAL" class="java.lang.String"/>
+	<field name="GIRO_RUBRO" class="java.lang.String"/>
+	<field name="CONTACTO" class="java.lang.String"/>
+	<field name="TELEFONO" class="java.lang.String"/>
+	<field name="CELULAR" class="java.lang.String"/>
+	<field name="NOMBRE_TIENDA" class="java.lang.String"/>
+	<field name="FECHA_VENTA_EMISION" class="java.sql.Date"/>
+	<field name="OBSERVACIONES" class="java.lang.String"/>
+	<field name="DESCRIPCION_ZONA_CIUDAD" class="java.lang.String"/>
+	<field name="ID_TIPO_VENTA" class="java.lang.Integer"/>
+	<group name="DESCRIPCION_ZONA_CIUDAD">
+		<groupExpression><![CDATA[$F{DESCRIPCION_ZONA_CIUDAD}]]></groupExpression>
+		<groupHeader>
+			<band height="59">
+				<textField>
+					<reportElement style="SubTitle" x="111" y="13" width="430" height="24" forecolor="#006600"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{DESCRIPCION_ZONA_CIUDAD}]]></textFieldExpression>
+				</textField>
+				<rectangle>
+					<reportElement mode="Opaque" x="0" y="13" width="36" height="24" forecolor="#CCCCCC" backcolor="#CCCCCC"/>
+				</rectangle>
+				<staticText>
+					<reportElement style="Column header" x="51" y="17" width="55" height="15"/>
+					<textElement/>
+					<text><![CDATA[zona]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="5" y="44" width="74" height="15"/>
+					<textElement textAlignment="Center">
+						<font fontName="Serif" size="9" isBold="true" isItalic="true"/>
+					</textElement>
+					<text><![CDATA[CLIENTE]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="100" y="44" width="74" height="15"/>
+					<textElement textAlignment="Center">
+						<font fontName="Serif" size="9" isBold="true" isItalic="true"/>
+					</textElement>
+					<text><![CDATA[R. SOCIAL]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="184" y="43" width="74" height="15"/>
+					<textElement textAlignment="Center">
+						<font fontName="Serif" size="9" isBold="true" isItalic="true"/>
+					</textElement>
+					<text><![CDATA[RUBRO]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="274" y="44" width="74" height="15"/>
+					<textElement textAlignment="Center">
+						<font fontName="Serif" size="9" isBold="true" isItalic="true"/>
+					</textElement>
+					<text><![CDATA[CONTACTO]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="354" y="43" width="74" height="15"/>
+					<textElement textAlignment="Center">
+						<font fontName="Serif" size="9" isBold="true" isItalic="true"/>
+					</textElement>
+					<text><![CDATA[TELEFONO]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="433" y="44" width="74" height="15"/>
+					<textElement textAlignment="Center">
+						<font fontName="Serif" size="9" isBold="true" isItalic="true"/>
+					</textElement>
+					<text><![CDATA[CELULAR]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="513" y="44" width="117" height="15"/>
+					<textElement textAlignment="Center">
+						<font fontName="Serif" size="9" isBold="true" isItalic="true"/>
+					</textElement>
+					<text><![CDATA[NUESTRO LOCAL]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="630" y="43" width="74" height="15"/>
+					<textElement textAlignment="Center">
+						<font fontName="Serif" size="9" isBold="true" isItalic="true"/>
+					</textElement>
+					<text><![CDATA[FECHA]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="704" y="43" width="74" height="15"/>
+					<textElement textAlignment="Center">
+						<font fontName="Serif" size="9" isBold="true" isItalic="true"/>
+					</textElement>
+					<text><![CDATA[SERVICIO]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="6"/>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="70" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="13" width="128" height="33"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Serif" size="17"/>
+				</textElement>
+				<text><![CDATA[CLIENTES]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="100" y="47" width="174" height="22"/>
+				<textElement>
+					<font fontName="Serif" size="18"/>
+				</textElement>
+				<text><![CDATA[LISTA X ZONA]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="36" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="35" width="801" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="30" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="28" width="801" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement x="0" y="0" width="85" height="30"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Serif" size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{NOMBRE_CLIENTE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="95" y="0" width="79" height="30"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Serif" size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{RAZON_SOCIAL}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="175" y="0" width="90" height="30"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Serif" size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{GIRO_RUBRO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="266" y="0" width="88" height="30"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Serif" size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{CONTACTO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="354" y="0" width="77" height="30"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Serif" size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{TELEFONO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="433" y="0" width="73" height="30"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Serif" size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{CELULAR}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="506" y="0" width="124" height="30"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Serif" size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{NOMBRE_TIENDA}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="630" y="0" width="71" height="30"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Serif" size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[$F{FECHA_VENTA_EMISION}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="701" y="0" width="100" height="30"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Serif" size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{OBSERVACIONES}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="555" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement style="Column header" x="433" y="0" width="80" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement style="Column header" x="513" y="0" width="40" height="20"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement style="Column header" x="0" y="0" width="197" height="20"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

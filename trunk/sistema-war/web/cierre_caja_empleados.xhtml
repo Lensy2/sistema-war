@@ -6,7 +6,7 @@ and open the template in the editor.
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-          xmlns:p="http://primefaces.prime.com.tr/ui"  
+          xmlns:p="http://primefaces.org/ui"    
       xmlns:f="http://java.sun.com/jsf/core">
 <h:head>
 <link rel="shortcut icon" href="favicon.ico" /> <title>Sistema Integrado</title>
@@ -35,8 +35,10 @@ and open the template in the editor.
     <div class="slider">
     <p:growl id="growl" showDetail="true"/>
     <p:panel header="M&oacute;dulo de Ventas " >
+
+        <h:form id="frm123">
        <p:fieldset id="fielset"  legend="Datos de Filtrado" style="margin-top:10px">
-<h:form id="frm123">
+
 
 
             <h:panelGrid id="pnl1" columns="2">
@@ -44,9 +46,12 @@ and open the template in the editor.
  <h:outputText value="Fecha:" />
                 <p:calendar id="feth1" effect="slide" locale="es" value="#{managedBeanReportando.fecha_cierre_caja2}" pattern="dd/MM/yyyy"/>
             <h:outputText value="Vendedor:" />
+
+
             <p:selectOneMenu  value="#{managedBeanReportando.empleado}" effect="drop" style="width:425px" converter="empleadoConverter" >
-    <f:selectItems  id="temsempleados"  value="#{managedBeanEmpleado.empleados_VendedorItems}"/>
-</p:selectOneMenu>
+            <f:selectItems  id="temsempleados"  value="#{managedBeanEmpleado.empleados_VendedorItems}"/>
+           </p:selectOneMenu>
+
                 <p:commandButton value="Generar Cierre de Caja" action="#{managedBeanReportando.generar_Caja2}" update="frm123" actionListener="#{managedBeanReportando.addInfoCajaEmpleados}"/>
 
 
@@ -55,23 +60,24 @@ and open the template in the editor.
 
             <p:messages showDetail="true" autoUpdate="true"/>
 
-            </h:form>
+           
                        </p:fieldset>
 
-    <h:form id="frmbutton">
-
+    
         <h:outputLink title="Cierre de Caja" value="cierre_caja_diario.pdf" >
                  <h:graphicImage value="/images/pdf.png"/>
             </h:outputLink>
 
-    </h:form>
+   
 
 <p:separator />
- <h:form id="frm_reportes777">
+
      <center>     <h:commandLink  action="#{managedBeanReportando.Volver_ReporteVentas}"  >
        <p:graphicImage  value="images/inicio1.jpg" />
 </h:commandLink></center>
-            </h:form>
+
+
+</h:form>
 
     </p:panel>
 

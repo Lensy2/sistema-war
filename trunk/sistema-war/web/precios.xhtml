@@ -6,7 +6,7 @@ and open the template in the editor.
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-          xmlns:p="http://primefaces.prime.com.tr/ui"  
+          xmlns:p="http://primefaces.org/ui"    
       xmlns:f="http://java.sun.com/jsf/core">
 <h:head>
 <link rel="shortcut icon" href="favicon.ico" /> <title>Sistema Integrado</title>
@@ -40,12 +40,12 @@ and open the template in the editor.
            <h:form id="frmpPreciosProductos">
 
 
-        <h:panelGrid id="pnlg1" columns="1" style="padding:0 10px 0 10px;" >
+        <h:panelGrid id="pnlg1" columns="1" style="padding:0 10px 0 10px; width: 100%;" >
 
 
 
-             <p:dataTable   paginator="true" rows="21"   var="item" value="#{managedBeanPrecioProducto.listaPrecioProductos}" widgetVar="carsTable"
-            emptyMessage="No se Encontraron datos">
+             <p:dataTable   paginator="true" rows="50"   var="item" value="#{managedBeanPrecioProducto.listaPrecioProductos}" widgetVar="carsTable"
+                            emptyMessage="No se Encontraron datos" style="width: 100%" >
 
          <f:facet name="header">
              Seleccione una Opci&oacute;n de Filtrado

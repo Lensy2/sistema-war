@@ -6,7 +6,7 @@ and open the template in the editor.
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-          xmlns:p="http://primefaces.prime.com.tr/ui"  
+          xmlns:p="http://primefaces.org/ui"    
       xmlns:f="http://java.sun.com/jsf/core">
 <h:head>
 <link rel="shortcut icon" href="favicon.ico" /> <title>Sistema Integrado</title>
@@ -38,7 +38,7 @@ and open the template in the editor.
         <h:form id="frm_inicial">
 
 
-         <h:panelGrid id="pnlg1" columns="4" style="padding:0 10px 0 145px;" >
+         <h:panelGrid id="pnlg1" columns="4" style="padding:0 10px 0 100px;" >
 
 
              <h:panelGroup>
@@ -79,11 +79,15 @@ and open the template in the editor.
 
          </h:panelGrid>
 
+            
+            
             <p:separator />
 
            
+            
 
-            <h:panelGrid id="pnlg23" columns="4" style="padding:0 10px 0 145px;" >
+
+            <h:panelGrid id="pnlg23" columns="4" style="padding:0 10px 0 100px;" >
 
 
 
@@ -114,6 +118,14 @@ and open the template in the editor.
             <h:graphicImage width="135 px" height="100 px" value="${pageContext.request.contextPath}/images/cierre_caja_empleado.jpg" alt="" title="" style="border-width:0px;"/>
             </h:commandLink><br/>
             <h:commandLink  styleClass="datagrid_centrar" value="Cierre-Caja" action="#{managedBeanReportando.CajaEmpleados}"/>
+             </h:panelGroup>
+
+
+                <h:panelGroup>
+                    <h:commandLink title="CONSULTAS" action="#{managedBeanConsultaVentas.buscar_ventas}"  >
+            <h:graphicImage width="135 px" height="100 px" value="${pageContext.request.contextPath}/images/buscar.jpg" alt="" title="" style="border-width:0px;"/>
+            </h:commandLink><br/>
+            <h:commandLink  styleClass="datagrid_centrar" value="CONSULTAS" action="#{managedBeanConsultaVentas.buscar_ventas}"/>
              </h:panelGroup>
 
 

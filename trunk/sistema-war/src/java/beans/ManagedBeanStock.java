@@ -1,3 +1,4 @@
+
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -29,10 +30,14 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import javax.ejb.EJB;
+import javax.faces.application.ConfigurableNavigationHandler;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.context.Flash;
+import org.primefaces.event.SelectEvent;
+import org.primefaces.event.UnselectEvent;
 
 /**
  *
@@ -847,6 +852,32 @@ public List<DetalleCambioProducto> getLista_detalles_cambios() {
         }
 
         return total_cambios_salida;
+    }
+
+
+
+    public void onRowSelect(SelectEvent event) {
+        FacesMessage msg = new FacesMessage("Producto Seleccionado",((StockProductoTiendaOrigen) event.getObject()).getProducto().getNombreProducto());
+
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+    }
+
+
+ public void onRowUnselect(UnselectEvent event) {
+        FacesMessage msg = new FacesMessage("Servicio No seleccionado", ((StockProductoTiendaOrigen) event.getObject()).getProducto().getNombreProducto());
+
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+    }
+
+
+
+    public void onRowDblselect(SelectEvent event) {
+        FacesContext context = FacesContext.getCurrentInstance();
+        ConfigurableNavigationHandler handler = (ConfigurableNavigationHandler) context.getApplication().getNavigationHandler();
+        Flash flash = context.getExternalContext().getFlash();
+        flash.put("selectedCar", (StockProductoTiendaOrigen) event.getObject());
+
+        handler.performNavigation("carDetail");
     }
 
 }

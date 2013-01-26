@@ -6,7 +6,7 @@ and open the template in the editor.
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-          xmlns:p="http://primefaces.prime.com.tr/ui"
+          xmlns:p="http://primefaces.org/ui"  
       xmlns:f="http://java.sun.com/jsf/core">
 <h:head>
 <link rel="shortcut icon" href="favicon.ico" /> <title>Sistema Integrado</title>
@@ -34,7 +34,7 @@ and open the template in the editor.
   <div class="block_header">
     <div class="slider">
 
-        <p:panel header="M&oacute;dulo de Ventas - CONTRATOS" style="width: 100%;" >
+        <p:panel header="M&oacute;dulo de Ventas - CONTRATOS Perteneciente a la VENTA :    #{managedBeanVenta.Formato(managedBeanVenta.venta)} " style="width: 100%;" >
        <h:form id="frm_button" prependId="false" >
 <p:growl id="growl" showDetail="true"/>
  <p:growl id="messages" />
@@ -43,16 +43,16 @@ and open the template in the editor.
 
 
 
-            <p:dataTable  id="tabla_principal" paginator="true" rows="100"   var="item" value="#{managedBeanVenta.venta.contratoFumigacionList}" widgetVar="carsTable"
+            <p:dataTable  id="tabla_principal" paginator="true" rows="100"   var="item" value="#{managedBeanContratoFumigacion.ListaVenta(managedBeanVenta.venta)}" widgetVar="carsTable"
             emptyMessage="No se Encontraron datos"
             selection="#{managedBeanContratoFumigacion.contrato}" selectionMode="single"
+            rowKey="#{item.idContratoFumigacion}"
             >
 
                 <p:ajax event="rowSelect" listener="#{managedBeanContratoFumigacion.onRowSelect}"
                     update=":frm_button:display :frm_button:growl" oncomplete="carDialog.show()" />
                 <p:ajax event="rowUnselect" listener="#{managedBeanContratoFumigacion.onRowUnselect}" update=":frm_button:growl"/>
-                <p:ajax event="rowDblselect" listener="#{managedBeanContratoFumigacion.onRowDblselect}" />
-
+               
 
          <f:facet name="header">
             Lista de Contratos
@@ -62,8 +62,7 @@ and open the template in the editor.
                 headerText="ID">
 
              <h:outputText value="#{managedBeanContratoFumigacion.Formato(item)}" />
-
-
+            
              </p:column>
 
 
@@ -76,12 +75,7 @@ and open the template in the editor.
             
 
 
-
-     
-
-
-
-                <p:column   style="width:100px; text-align:center; font-size: 11px;" filterBy="#{item.fechaVenta}"
+      <p:column   style="width:100px; text-align:center; font-size: 11px;" filterBy="#{item.fechaVenta}"
                 headerText="Fecha"
                 filterMatchMode="contains">
                     <h:outputText value="#{item.fechaVenta}" >
@@ -112,6 +106,25 @@ and open the template in the editor.
                            <f:setPropertyActionListener value="#{item}" target="#{managedBeanContratoFumigacion.contrato}" />
                         </h:commandButton>
         </p:column>
+
+
+
+
+
+         <p:column style="width:35px;text-align:center; font-size: 10px;"
+                headerText="TOTAL REPORTES">
+
+             <h:outputText style="color: red;" value="#{managedBeanContratoFumigacion.Cantidad_reportes(item)}" />
+
+             </p:column>
+
+<p:column style="width:25px;text-align:center; font-size: 10px;"
+                headerText="VER">
+
+    <h:commandButton id="btnseleccion" title="Ver TODOS los reportes" image="${pageContext.request.contextPath}/images/ver_contratos.jpg" value="Ver TODO" action="#{managedBeanContratoFumigacion.ver_todos_contratos}">
+                        <f:setPropertyActionListener value="#{item}" target="#{managedBeanContratoFumigacion.contrato}" />
+                        </h:commandButton>
+             </p:column>
 
     </p:dataTable>
 

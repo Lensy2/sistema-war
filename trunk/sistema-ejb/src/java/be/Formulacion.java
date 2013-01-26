@@ -27,24 +27,10 @@ import javax.persistence.TemporalType;
 
 /**
  *
- * @author root : Zavaleta De la Cruz Yury Daniel
- * Copyright 2011 Zavaleta De la Cruz Yury Daniel
-
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
-
-       http://www.apache.org/licenses/LICENSE-2.0
-
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
-
+ * @author argos
  */
 @Entity
-@Table(name = "FORMULACION", catalog = "sistema", schema = "")
+@Table(name = "formulacion", catalog = "sistema", schema = "")
 @NamedQueries({
     @NamedQuery(name = "Formulacion.findAll", query = "SELECT f FROM Formulacion f"),
     @NamedQuery(name = "Formulacion.findByIdFormulacion", query = "SELECT f FROM Formulacion f WHERE f.idFormulacion = :idFormulacion"),
@@ -68,13 +54,13 @@ public class Formulacion implements Serializable {
     @Basic(optional = false)
     @Column(name = "DESCRIPCION", nullable = false, length = 800)
     private String descripcion;
-    @OneToMany(mappedBy = "formulacion", fetch = FetchType.LAZY)
-    private List<ProduccionAlmacen> produccionAlmacenList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "formulacion", fetch = FetchType.LAZY)
-    private List<DetalleFormulacionInsumos> detalleFormulacionInsumosList;
     @JoinColumn(name = "ID_PRODUCTO", referencedColumnName = "ID_PRODUCTO", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Producto producto;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "formulacion", fetch = FetchType.LAZY)
+    private List<DetalleFormulacionInsumos> detalleFormulacionInsumosList;
+    @OneToMany(mappedBy = "formulacion", fetch = FetchType.LAZY)
+    private List<ProduccionAlmacen> produccionAlmacenList;
 
     public Formulacion() {
     }
@@ -122,12 +108,12 @@ public class Formulacion implements Serializable {
         this.descripcion = descripcion;
     }
 
-    public List<ProduccionAlmacen> getProduccionAlmacenList() {
-        return produccionAlmacenList;
+    public Producto getProducto() {
+        return producto;
     }
 
-    public void setProduccionAlmacenList(List<ProduccionAlmacen> produccionAlmacenList) {
-        this.produccionAlmacenList = produccionAlmacenList;
+    public void setProducto(Producto producto) {
+        this.producto = producto;
     }
 
     public List<DetalleFormulacionInsumos> getDetalleFormulacionInsumosList() {
@@ -138,12 +124,12 @@ public class Formulacion implements Serializable {
         this.detalleFormulacionInsumosList = detalleFormulacionInsumosList;
     }
 
-    public Producto getProducto() {
-        return producto;
+    public List<ProduccionAlmacen> getProduccionAlmacenList() {
+        return produccionAlmacenList;
     }
 
-    public void setProducto(Producto producto) {
-        this.producto = producto;
+    public void setProduccionAlmacenList(List<ProduccionAlmacen> produccionAlmacenList) {
+        this.produccionAlmacenList = produccionAlmacenList;
     }
 
     @Override

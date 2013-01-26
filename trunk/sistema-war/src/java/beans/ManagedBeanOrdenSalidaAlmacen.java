@@ -1,3 +1,4 @@
+
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -21,9 +22,11 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.context.Flash;
 import javax.faces.event.ActionEvent;
+import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.event.UnselectEvent;
+import org.primefaces.model.SelectableDataModel;
 /**
  *
  * @author root : Zavaleta De la Cruz Yury Daniel
@@ -44,18 +47,36 @@ import org.primefaces.event.UnselectEvent;
  */
 @ManagedBean
 @SessionScoped
-public class ManagedBeanOrdenSalidaAlmacen implements Serializable{
+public class ManagedBeanOrdenSalidaAlmacen   implements Serializable{
     @EJB
     private OrdenSalidaDetalleAlmacenProductosFacadeLocal ordenSalidaDetalleAlmacenProductosFacade;
     private OrdenSalidaDetalleAlmacenProductos orden_salida = new OrdenSalidaDetalleAlmacenProductos();
     private List<OrdenSalidaDetalleAlmacenProductos> lista;
 private Date fecha;
+
+private Modelo_Ordenes_lista lista_modelos;
     public ManagedBeanOrdenSalidaAlmacen() {
         orden_salida = new OrdenSalidaDetalleAlmacenProductos();
         orden_salida.setEstadoOrdenSalidaDetalleAlmacenProductos(new EstadoOrdenSalidaDetalleAlmacenProductos(1));
         lista = new LinkedList<OrdenSalidaDetalleAlmacenProductos>();
         fecha = new Date();
+        lista_modelos = new Modelo_Ordenes_lista();
     }
+
+    public Modelo_Ordenes_lista getLista_modelos() {
+       
+      //  lista = ordenSalidaDetalleAlmacenProductosFacade.findAll();
+       // lista_modelos = new Modelo_Ordenes_lista(lista);
+        return lista_modelos;
+    }
+
+    public void setLista_modelos(Modelo_Ordenes_lista lista_modelos) {
+        this.lista_modelos = lista_modelos;
+    }
+
+
+     
+
 
     public Date getFecha() {
         return fecha;
@@ -68,7 +89,7 @@ private Date fecha;
 
 
     public void filtrar_lista(){
-    lista.clear();
+    lista = new LinkedList<OrdenSalidaDetalleAlmacenProductos>();
         try {
             for(OrdenSalidaDetalleAlmacenProductos o : ordenSalidaDetalleAlmacenProductosFacade.findAll()){
                if(o.getFechaRegistro().equals(fecha)){
@@ -76,7 +97,10 @@ private Date fecha;
                }
 
             }
+        lista_modelos = new Modelo_Ordenes_lista(lista);
+
         } catch (Exception e) {
+            e.printStackTrace();
         }
     }
     public List<OrdenSalidaDetalleAlmacenProductos> getLista() {
@@ -160,4 +184,58 @@ private Date fecha;
     public String Volver_OrdenSalida(){
 return "index?faces-redirect=true";
      }
+
+
+
+
+
+
+
+
+
+
+
+
+
+ public  class Modelo_Ordenes_lista extends ListDataModel<OrdenSalidaDetalleAlmacenProductos> implements SelectableDataModel<OrdenSalidaDetalleAlmacenProductos>{
+
+        public Modelo_Ordenes_lista() {
+        }
+
+
+
+    public Modelo_Ordenes_lista(List<OrdenSalidaDetalleAlmacenProductos> data) {
+        super(data);
+    }
+
+     @Override
+    public OrdenSalidaDetalleAlmacenProductos getRowData(String rowKey) {
+        //In a real app, a more efficient way like a query by rowKey should be implemented to deal with huge data
+
+    List<OrdenSalidaDetalleAlmacenProductos> ordenes = (List<OrdenSalidaDetalleAlmacenProductos>)this.getWrappedData();
+
+        // List<OrdenSalidaDetalleAlmacenProductos> ordenes = ordenSalidaDetalleAlmacenProductosFacade.findAll();
+
+         
+        for(OrdenSalidaDetalleAlmacenProductos orden : ordenes) {
+            if(orden.getDetalleAlmacenProductos().getIdDetalleAlmacenProductos().toString().equalsIgnoreCase(rowKey))
+               
+            {
+                return orden;
+            }
+        }
+
+        return null;
+    }
+
+    @Override
+    public Object getRowKey(OrdenSalidaDetalleAlmacenProductos orden) {
+        return orden.getIdOrdenSalidaDetalleAlmacenProductosCostos();
+    }
+
+
+
+    }
+
+
 }

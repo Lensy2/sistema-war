@@ -6,7 +6,7 @@ and open the template in the editor.
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-          xmlns:p="http://primefaces.prime.com.tr/ui"  
+          xmlns:p="http://primefaces.org/ui"  
       xmlns:f="http://java.sun.com/jsf/core">
 <h:head> <meta http-equiv="refresh" content="#{session.maxInactiveInterval};url=../index.jsf" />
 <link rel="shortcut icon" href="favicon.ico" /> <title>Sistema Integrado</title>
@@ -80,14 +80,14 @@ and open the template in the editor.
 
 
 
-            <p:commandButton value="Traer Datos" action="#{managedBeanStock.seguimiento_productos}"  update="frm_button:tbldatosFiltrados frm_button:tbldatosFiltrados2 frm_button:tbldatosFiltrados3 frm_button:tbldatosFiltrados5 frm_button:fielset2" />
+            <p:commandButton value="Traer Datos" action="#{managedBeanStock.seguimiento_productos}"  update=":frm_button:tbldatosFiltrados :frm_button:tbldatosFiltrados2 :frm_button:tbldatosFiltrados3 :frm_button:tbldatosFiltrados5 :frm_button:fielset2" />
             <p:separator />
 
 
 
 
             <p:dataTable id="tbldatosFiltrados"   var="item" value="#{managedBeanStock.lista_entradas}"
-                         widgetVar="ingresosTable" selection="#{managedBeanStock.ingresotiendaProducto}"  selectionMode="single"
+                         widgetVar="ingresosTable" 
                   emptyMessage="No se Encontraron datos"
                          >
          
@@ -115,7 +115,10 @@ and open the template in the editor.
 
                 <p:column style="width:95px;" headerText="op.">
                               <p:commandButton value="Ver" image="ui-icon ui-icon-search"
-                              update="frm_button:display " oncomplete="carDialog.show()" />
+                                               update=":frm_button:display " oncomplete="carDialog.show()" >
+                                  <f:setPropertyActionListener value="#{item}" target="#{managedBeanStock.ingresotiendaProducto}" />
+
+                              </p:commandButton>
                 </p:column >
 
  <f:facet name="footer">
@@ -137,7 +140,7 @@ and open the template in the editor.
 
  <p:separator />
 
- <p:dataTable id="tbldatosFiltrados2"   var="item" value="#{managedBeanStock.lista_salidas}"  selection="#{managedBeanStock.salidatiendaProducto}"  selectionMode="single">
+ <p:dataTable id="tbldatosFiltrados2"   var="item" value="#{managedBeanStock.lista_salidas}"  >
  <f:facet name="header">
            Seguimiento de SALIDA.
         </f:facet>
@@ -163,7 +166,11 @@ and open the template in the editor.
 
   <p:column style="width:95px;" headerText="op.">
                               <p:commandButton value="Ver" image="ui-icon ui-icon-search"
-                              update="frm_button:display2 " oncomplete="carDialog2.show()" />
+                                               update=":frm_button:display2 " oncomplete="carDialog2.show()" >
+                                  
+                                  <f:setPropertyActionListener value="#{item}" target="#{managedBeanStock.salidatiendaProducto}" />
+
+                              </p:commandButton>
                 </p:column >
 
  <f:facet name="footer">
