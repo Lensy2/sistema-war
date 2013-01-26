@@ -1,3 +1,4 @@
+
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -37,6 +38,8 @@ import javax.faces.model.SelectItem;
  */
 
 
+
+
 @ManagedBean
 @SessionScoped
 public class ManagedBeanEmpleado implements  Serializable{
@@ -46,16 +49,15 @@ public class ManagedBeanEmpleado implements  Serializable{
  private List<Empleado> lista ;
 private List<SelectItem> empleadoItems = new LinkedList<SelectItem>();
 private HashMap<Integer, Empleado> myempleados = new HashMap<Integer,Empleado>();
-   public List<SelectItem> getEmpleados_VendedorItems() {
+
+
+public List<SelectItem> getEmpleados_VendedorItems() {
         lista = new ArrayList<Empleado>();
         empleadoItems = new LinkedList<SelectItem>();
         lista = empleadoFacade.findAll();
         for(Empleado p: lista){
-        
            myempleados.put(p.getIdEmpleado(), p);
            empleadoItems.add(new SelectItem(p, p.getNombreEmpleado()));
-            
-        
         }
          return empleadoItems;
     }

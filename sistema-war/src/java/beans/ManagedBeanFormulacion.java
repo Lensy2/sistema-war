@@ -1,3 +1,4 @@
+
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -20,7 +21,9 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
+import org.primefaces.model.SelectableDataModel;
 
 /**
  *
@@ -40,6 +43,9 @@ import javax.faces.model.SelectItem;
    limitations under the License.
 
  */
+
+
+
 
 @ManagedBean
 @SessionScoped
@@ -61,6 +67,7 @@ private List<DetalleFormulacionInsumos> lista_detalles;
 private MateriaPrima materia_prima;
 private BigDecimal proporcion;
 
+private Modelo_folumnas_lista lista_modelos;
     public ManagedBeanFormulacion() {
         formulacion = new Formulacion();
         lista = new LinkedList<Formulacion>();
@@ -69,8 +76,31 @@ private BigDecimal proporcion;
         lista_detalles = new LinkedList<DetalleFormulacionInsumos>();
         materia_prima = new MateriaPrima();
         proporcion = new BigDecimal(0);
+        lista_modelos = new Modelo_folumnas_lista();
     }
 
+    public Modelo_folumnas_lista getLista_modelos() {
+        lista.clear();
+        try {
+           for(Formulacion f :formulacionFacade.findAll())
+           {
+           if(f.getDetalleFormulacionInsumosList().isEmpty()==false)
+           {
+           lista.add(f);
+           }
+           }
+
+        } catch (Exception e) {
+        }
+        lista_modelos = new Modelo_folumnas_lista(lista);
+        return lista_modelos;
+    }
+
+    public void setLista_modelos(Modelo_folumnas_lista lista_modelos) {
+        this.lista_modelos = lista_modelos;
+    }
+
+    
     public BigDecimal getProporcion() {
         return proporcion;
     }
@@ -151,6 +181,8 @@ formulacion.getDetalleFormulacionInsumosList().add(detalle);
 detalle = new DetalleFormulacionInsumos();
 detalle.setMateriaPrima(new MateriaPrima(id_));
   }
+     
+    
 
  public String crear(){
      try
@@ -260,6 +292,63 @@ public void EliminarLista(){
     }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+public  class Modelo_folumnas_lista extends ListDataModel<Formulacion> implements SelectableDataModel<Formulacion>{
+
+        public Modelo_folumnas_lista() {
+        }
+
+
+
+    public Modelo_folumnas_lista(List<Formulacion> data) {
+        super(data);
+    }
+
+     @Override
+    public Formulacion getRowData(String rowKey) {
+        //In a real app, a more efficient way like a query by rowKey should be implemented to deal with huge data
+
+    List<Formulacion> formulas = (List<Formulacion>)this.getWrappedData();
+
+        // List<OrdenSalidaDetalleAlmacenProductos> ordenes = ordenSalidaDetalleAlmacenProductosFacade.findAll();
+
+         
+        for(Formulacion formula : formulas) {
+            if(formula.getIdFormulacion().toString().equalsIgnoreCase(rowKey))
+               
+            {
+                return formula;
+            }
+        }
+
+        return null;
+    }
+
+    @Override
+    public Object getRowKey(Formulacion form) {
+        return form.getIdFormulacion();
+    }
+
+
+
+    }
 
     
 }

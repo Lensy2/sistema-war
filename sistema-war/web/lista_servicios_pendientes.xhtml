@@ -6,7 +6,7 @@ and open the template in the editor.
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-          xmlns:p="http://primefaces.prime.com.tr/ui"
+          xmlns:p="http://primefaces.org/ui"  
       xmlns:f="http://java.sun.com/jsf/core">
 <h:head>
 <link rel="shortcut icon" href="favicon.ico" /> <title>Sistema Integrado</title>
@@ -34,8 +34,10 @@ and open the template in the editor.
   <div class="block_header">
     <div class="slider">
     
-    <p:panel header="M&oacute;dulo de Ventas - SERVICIOS PENDIENTES" >
-       <h:form id="frm_button" prependId="false" >
+        <h:form id="frm_button">
+
+            <p:panel header="M&oacute;dulo de Ventas - SERVICIOS PENDIENTES" >
+       
 <p:growl id="growl" showDetail="true"/>
  <p:growl id="messages" />
 
@@ -43,16 +45,15 @@ and open the template in the editor.
 
 
 
-            <p:dataTable  id="tabla_principal" paginator="true" rows="100"   var="item" value="#{managedBeanVenta.listaFiltrada}" widgetVar="carsTable"
+            <p:dataTable  id="tabla_principal" paginator="true" rows="100"   var="item" value="#{managedBeanVenta.lista_modelos}" widgetVar="carsTable"
             emptyMessage="No se Encontraron datos"
-            selection="#{managedBeanVenta.venta}" selectionMode="single"
+            selection="#{managedBeanVenta.venta}" selectionMode="single" rowKey="#{item.idVenta}"
             >
 
                 <p:ajax event="rowSelect" listener="#{managedBeanVenta.onRowSelect}"
                     update=":frm_button:display :frm_button:growl" oncomplete="carDialog.show()" />
-                <p:ajax event="rowUnselect" listener="#{managedBeanVenta.onRowUnselect}" update=":frm_button:growl"/>
-                <p:ajax event="rowDblselect" listener="#{managedBeanVenta.onRowDblselect}" />
-
+                <p:ajax event="rowUnselect" listener="#{managedBeanVenta.onRowUnselect}" update=":frm_button:display :frm_button:growl"/>
+               
 
          <f:facet name="header">
             Lista de servicios, Pendientes a terminar.
@@ -63,6 +64,7 @@ and open the template in the editor.
 
              <h:outputText value="#{managedBeanVenta.Formato(item)}" />
 
+            
 
              </p:column>
 
@@ -97,7 +99,18 @@ and open the template in the editor.
 
     </p:dataTable>
 
-            <p:dialog id="dialog" header="Detalle del Servicio" widgetVar="carDialog" resizable="false"
+        
+
+
+
+       
+
+        <p:separator />
+          
+         
+    </p:panel>
+            
+                <p:dialog id="dialog" header="Detalle del Servicio" widgetVar="carDialog" resizable="false"
                       showEffect="explode" hideEffect="explode" height="370" width="520" >
 
         <h:panelGrid id="display" columns="2" cellpadding="4">
@@ -108,7 +121,7 @@ and open the template in the editor.
             <h:outputText style="font-size: 15px;" value="#{managedBeanVenta.Formato(managedBeanVenta.venta)}" />
 
            <h:outputText style="font-size: 15px;" value="Estado :"/>
- <p:selectOneMenu value="#{managedBeanVenta.venta.estadoVenta}" effect="drop" style="font-size: 15px; width:320px" converter="estadoventaConverter" >
+           <p:selectOneMenu value="#{managedBeanVenta.venta.estadoVenta}" effect="drop" style="font-size: 15px; width:320px" converter="estadoventaConverter" >
      <f:selectItems  id="temsTipoVentas" value="#{managedBeanEstadoVenta.estadoventa_serviciosUPDATEItems}"/>
         </p:selectOneMenu>
 
@@ -135,35 +148,32 @@ and open the template in the editor.
 
  
 
-          <p:confirmDialog id="confirmDialog" message="Esta apunto de realizar un cambio, Desea guardar ???"
-                                 header="Confirmación"  severity="alert" widgetVar="confirmation" width="250" height="220">
+         
+        </h:panelGrid>
+ 
+       <center>        <p:commandButton id="showDialogButton" value="Guardar Cambios" onclick="confirmation.show()" type="button" />
+</center>         
+    </p:dialog>
 
-        <p:commandButton id="confirm" value="SI" update="frm_button:messages frm_button:tabla_principal" oncomplete="carDialog.hide()"
+
+<p:confirmDialog id="confirmDialog" message="Esta apunto de realizar un cambio, Desea guardar ???"
+                                 header="Confirmación"  severity="alert" widgetVar="confirmation" width="250" height="170">
+
+        <p:commandButton id="confirm" value="SI" update=":frm_button:messages :frm_button:tabla_principal" oncomplete="carDialog.hide() confirmation.hide()"
                          actionListener="#{managedBeanVenta.destroyWorld}" />
         <p:commandButton id="decline" value="NO" onclick="confirmation.hide()" type="button" />
 
     </p:confirmDialog>
-        </h:panelGrid>
-
-                <center>        <p:commandButton id="showDialogButton" value="Guardar Cambios" onclick="confirmation.show()" type="button" />
-</center>
+        </h:form>
 
 
-
-    </p:dialog>
-
-
-
-
-               </h:form>
-
-        <p:separator />
-            <h:form id="frm_link2">
-                <center>     <h:commandLink  action="#{managedBeanVenta.Volver_Venta}"  >
+        <h:form id="frm_return">
+         <center>     <h:commandLink  action="ventas?faces-redirect=true"  >
        <p:graphicImage  value="images/inicio1.jpg" />
 </h:commandLink></center>
-            </h:form>
-    </p:panel>
+
+        </h:form>
+
     </div>
   </div>
   <div class="clr"></div>

@@ -1,3 +1,4 @@
+
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -121,8 +122,28 @@ public String Crear(){
 ventaFacade.edit(ventaxD);
 if((pagoventacredito.getVenta().getTotalPagosCredito().compareTo(pagoventacredito.getVenta().getTotalVenta())==0)  ||(pagoventacredito.getVenta().getTotalPagosCredito().compareTo(pagoventacredito.getVenta().getTotalVenta())==1)){
     
-ventaxD.setEstadoVenta(new EstadoVenta(3));
-          ventaFacade.edit(ventaxD);
+   
+    if (ventaxD.getEstadoVenta().getIdEstadoVenta() < 3){
+         ventaxD.setEstadoVenta(new EstadoVenta(3));
+    } else
+    {
+
+        if (ventaxD.getEstadoVenta().getIdEstadoVenta() == 7){
+        ventaxD.setEstadoVenta(new EstadoVenta(8));
+        }
+ else
+        {
+ventaxD.setEstadoVenta(new EstadoVenta(9));
+        }
+// IMPORTANTE COLOCAR EL CODIGO DE WICH CASE AQUI , PARA SELECCIONAR LOS ESTADOS
+// CORRESPONDIENTES
+//switch case
+
+
+    }
+
+
+ventaFacade.edit(ventaxD);
         }
 
 

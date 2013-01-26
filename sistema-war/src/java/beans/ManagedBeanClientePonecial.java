@@ -1,3 +1,4 @@
+
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -33,6 +34,8 @@ import javax.faces.bean.SessionScoped;
    limitations under the License.
 
  */
+
+
 @ManagedBean
 @SessionScoped
 public class ManagedBeanClientePonecial implements Serializable{
@@ -66,7 +69,7 @@ public class ManagedBeanClientePonecial implements Serializable{
         } catch (Exception e) {
             e.printStackTrace();
         }
-    return "ventas?faces-redirect=true";
+    return "clientes_potenciales?faces-redirect=true";
     }
 
     public ClientePotencial getCliente_potencial() {

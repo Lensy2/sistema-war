@@ -35,9 +35,6 @@ import javax.faces.model.SelectItem;
 
  */
 
-
-
-
 @ManagedBean
 @SessionScoped
 public class ManagedBeanUnidadMedida implements Serializable{

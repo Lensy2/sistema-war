@@ -6,7 +6,7 @@ and open the template in the editor.
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-          xmlns:p="http://primefaces.prime.com.tr/ui"  
+          xmlns:p="http://primefaces.org/ui"    
       xmlns:f="http://java.sun.com/jsf/core">
 <h:head>
 <link rel="shortcut icon" href="favicon.ico" /> <title>Sistema Integrado</title>
@@ -45,13 +45,24 @@ and open the template in the editor.
 
 
      <h:panelGrid id="pnlg1" columns="2"  >
+<h:outputText value="Nombre del Cliente : "/>
 
+<p:autoComplete required="true" id="auroxcomplete_cliente"
+                value="#{managedBeanActividad.actividad.cliente}"
+                 completeMethod="#{managedBeanVenta.completar_filtrado_Clientes}"
+                 var="item_cliente" itemLabel="#{item_cliente.nombreCliente}"
+                  itemValue="#{item_cliente}"
+
+               converter="clienteConverter"
+               size="42"
+                />
             <h:outputText value="Descripción - Actividad: " />
             <p:inputTextarea cols="35" style="color: green;" value="#{managedBeanActividad.actividad.descripcionActividad}"/>
 
             <h:outputText value="Fecha: " />
-            <p:calendar   value="#{managedBeanActividad.actividad.fecha}" pattern="dd/MM/yyyy" />
+            <p:calendar   value="#{managedBeanActividad.actividad.fecha}" pattern="dd/MM/yyyy hh:mm a" />
 
+            
  </h:panelGrid>
 
          <h:commandButton value="Agregar"  title="Dar Click para Agregar la Actividad" image="images/guardar.png" action="#{managedBeanActividad.crear}" />

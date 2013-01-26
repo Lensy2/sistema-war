@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:p="http://primefaces.org/ui"    
+      xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+<link rel="shortcut icon" href="favicon.ico" /> <title>Sistema Integrado</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link href="style.css" rel="stylesheet" type="text/css" />  <meta http-equiv="refresh" content="#{session.maxInactiveInterval};url=index.jsf" />  
+<p:dock position="top" id="dock_menu" itemWidth="75" >
+    <p:menuitem value="Inicio"  icon="/images/casa_final.jpg" url="index.jsf"/>
+    <p:menuitem value="Ventas"  icon="/images/ventas_final.jpg" url="ventas.jsf"/>
+    <p:menuitem value="Compras" icon="/images/compras_final.jpg" url="compras.jsf"/>
+    <p:menuitem value="Almac&eacute;n"  icon="/images/almacen_final.jpg" url="almacen.jsf"/>
+    <p:menuitem value="Finanzas"  icon="/images/finanzas_final.jpg" url="finanzas.jsf"/>
+
+</p:dock>
+</h:head>
+<h:body>
+<div class="main">
+  <div class="header">
+    <div class="logo">
+       </div>
+    <div class="menu">
+
+    </div>
+  </div>
+  <div class="clr"></div>
+  <div class="block_header">
+    <div class="slider">
+    <p:growl id="growl" showDetail="true"/>
+    <p:panel header="M&oacute;dulo de Ventas - Consulta ventas" >
+
+
+
+         <h:form id="frm2">
+
+             <h:panelGrid columns="1" id="grid_principal_cobros" style="width: 100%;">
+                 <p:fieldset id="fielset_principal_FECHAS" toggleable="true" toggleSpeed="500" legend="FECHAS DE FILTRADO" style="margin-top:10px">
+                     <h:panelGrid columns="5" id="grid_FECHAS" style="width: 100%;">
+                         <h:outputText value="INICIO:"/>
+                         <p:calendar value="#{managedBeanConsultaVentas.fecha_inicial}" pattern="dd/MM/yyyy"/>
+                         <h:outputText value="FIN:"/>
+                         <p:calendar value="#{managedBeanConsultaVentas.fecha_final}" pattern="dd/MM/yyyy"/>
+                         <p:commandButton value="CALCULAR" action="#{managedBeanConsultaVentas.filtrar_listas}" update="frm2"/>
+                     </h:panelGrid>
+
+
+                 </p:fieldset>
+             <p:fieldset id="fielset" toggleable="true" toggleSpeed="500" legend="Lista Boletas" style="margin-top:10px">
+
+
+               <p:dataTable    var="item" value="#{managedBeanConsultaVentas.lista_ventas}" widgetVar="carsTable"
+            emptyMessage="No se Encontraron datos"
+
+            >
+
+       
+
+        <p:column   style="text-align:center; font-size: 13px;" headerText="ID">
+            <h:outputText value="#{managedBeanVenta.Formato(item)}" />
+        </p:column>
+
+<p:column   style="text-align:center; font-size: 13px;" headerText="CLIENTE">
+           <h:outputText value="#{item.cliente.nombreCliente}" />
+        </p:column>
+
+
+                   <p:column   style="text-align:center; font-size: 13px;" headerText="FECHA DE ENVIO">
+          <h:outputText value="#{item.fechaVenta}" ><f:convertDateTime pattern="EEEE dd MMMM yyyy" /></h:outputText>
+        </p:column>
+                   <p:column   style="text-align:center; font-size: 13px;" headerText="ESTADO">
+          <h:outputText  value="#{item.estadoVenta.nombreTestadoVenta}" />
+        </p:column>
+                   <p:column   style="text-align:center; font-size: 13px;" headerText="MONTO">
+           <h:outputText  value="#{item.totalVenta}" />
+        </p:column>
+
+                
+
+
+<p:column   style="width: 15px; text-align:center; font-size: 13px;" headerText="OP">
+    <p:commandButton value="VER" style="text-align:center; font-size: 13px;" update=":frm2:display :frm2:tablaBoletas" oncomplete="carDialog.show()">
+
+        <f:setPropertyActionListener value="#{item}" target="#{managedBeanConsultaVentas.venta}" />
+
+    </p:commandButton>
+        </p:column>
+
+           
+
+    </p:dataTable>
+
+
+
+
+
+
+
+        </p:fieldset>
+          
+             <p:fieldset id="fielset233"  toggleable="true" toggleSpeed="500" legend="Lista Facturas" style="margin-top:10px">
+
+<p:dataTable    var="item" value="#{managedBeanConsultaVentas.lista_facturas}" widgetVar="carsTable"
+            emptyMessage="No se Encontraron datos">
+
+
+
+        <p:column   style="text-align:center; font-size: 13px;" headerText="ID">
+          <h:outputText value="#{managedBeanFacturaVenta.Formato(item)}" />
+        </p:column>
+
+<p:column   style="text-align:center; font-size: 13px;" headerText="CLIENTE">
+           <h:outputText value="#{item.cliente.nombreCliente}" />
+        </p:column>
+
+
+                   <p:column   style="text-align:center; font-size: 13px;" headerText="FECHA DE ENVIO">
+          <h:outputText value="#{item.fechaVenta}" ><f:convertDateTime pattern="EEEE dd MMMM yyyy" /></h:outputText>
+        </p:column>
+                   <p:column   style="text-align:center; font-size: 13px;" headerText="ESTADO">
+          <h:outputText  value="#{item.estadoVenta.nombreTestadoVenta}" />
+        </p:column>
+                   <p:column   style="text-align:center; font-size: 13px;" headerText="MONTO">
+          <h:outputText  value="#{item.totalVentaIncluidoIgv}" />
+        </p:column>
+
+     
+
+<p:column   style="width: 15px; text-align:center; font-size: 13px;" headerText="OP">
+    <p:commandButton value="VER" style="text-align:center; font-size: 13px;" update=":frm2:display2 :frm2:tabla_facturas" oncomplete="carDialog2.show()">
+
+        <f:setPropertyActionListener value="#{item}" target="#{managedBeanConsultaVentas.factura}" />
+
+    </p:commandButton>
+        </p:column>
+    
+
+    </p:dataTable>
+                 
+
+
+
+
+        </p:fieldset>
+                
+
+</h:panelGrid>
+             <p:separator />
+           <center>
+               <h:outputLink id="lnk" value="#">
+    <p:printer target="grid_principal_cobros" />
+    <p:graphicImage width="100 px" height="75 px" value="/images/imprimir3.jpg" />
+</h:outputLink>
+               
+               <h:commandLink  action="#{managedBeanPagoVentaCredito.Volver_CobroVentas}"  >
+       <p:graphicImage  value="images/inicio1.jpg" />
+</h:commandLink></center>
+
+
+
+
+
+
+         <p:dialog id="dialog" header="BOLETA DE VENTA " widgetVar="carDialog" resizable="false"
+              width="600" showEffect="clip" hideEffect="fold">
+    
+
+
+        <h:panelGrid id="display" columns="2" cellpadding="4">
+
+            <h:outputText value="ID : " style="font-size: 15px;" />
+            <h:outputText value="#{managedBeanVenta.Formato(managedBeanConsultaVentas.venta)}" style="font-size: 17px; color: red;" />
+             <h:outputText value="CANTIDAD DE PRODUCTOS : " style="font-size: 15px;" />
+             <h:outputText  value="#{managedBeanConsultaVentas.Tamanio_ventas(managedBeanConsultaVentas.venta)}" />
+
+        </h:panelGrid>
+    <p:separator />
+
+    <p:dataTable   id="tablaBoletas" var="item_detalle" value="#{managedBeanConsultaVentas.venta.detalleVentaProductoList}" widgetVar="productosVenta"
+                    emptyMessage="No se Encontraron datos">
+
+    <p:column   style="text-align:center; font-size: 13px;" headerText="PRODUCTO">
+        <h:outputText value="#{item_detalle.producto.nombreProducto}" />
+        </p:column>
+
+         <p:column   style="text-align:center; font-size: 13px;" headerText="CANTIDAD">
+             <h:outputText value="#{item_detalle.cantidad}" />
+        </p:column>
+
+          <p:column   style="text-align:center; font-size: 13px;" headerText="P. VENTA">
+              <h:outputText value="#{item_detalle.precioVenta}" />
+        </p:column>
+
+          <p:column   style="text-align:center; font-size: 13px;" headerText="DES.UNIT">
+              <h:outputText value="#{item_detalle.descuento}" />
+        </p:column>
+
+        <p:column   style="text-align:center; font-size: 13px;" headerText="SUB-TOT">
+            <h:outputText value="#{item_detalle.subTotal}" />
+        </p:column>
+
+    </p:dataTable>
+ 
+    </p:dialog>
+
+
+
+             <p:dialog id="dialog2" header="FACTURA DE VENTA " widgetVar="carDialog2" resizable="false"
+              width="600" showEffect="clip" hideEffect="fold">
+                
+
+
+        <h:panelGrid id="display2" columns="2" cellpadding="4">
+
+            <h:outputText value="ID : " style="font-size: 15px;" />
+            <h:outputText value="#{managedBeanFacturaVenta.Formato(managedBeanConsultaVentas.factura)}" style="font-size: 17px; color: red;" />
+         
+             <h:outputText value="CANTIDAD DE PRODUCTOS : " style="font-size: 15px;" />
+             <h:outputText  value="#{managedBeanConsultaVentas.Tamanio_Factura_ventas(managedBeanConsultaVentas.factura)}" />
+       
+            </h:panelGrid>
+                      <h:outputText value="NOTA, los SUBTOTALES aparecen con la cantidad SIN IGV" style="font-size: 15px;" />
+
+    <p:separator />
+
+    <p:dataTable id="tabla_facturas"  var="item_detalle_2" value="#{managedBeanConsultaVentas.factura.detalleFacturaVentaProductoList}" widgetVar="productosVentaFactura"
+                    emptyMessage="No se Encontraron datos">
+
+    <p:column   style="text-align:center; font-size: 13px;" headerText="PRODUCTO">
+        <h:outputText value="#{item_detalle_2.producto.nombreProducto}" />
+        </p:column>
+
+          <p:column   style="text-align:center; font-size: 13px;" headerText="CANTIDAD">
+             <h:outputText value="#{item_detalle_2.cantidad}" />
+        </p:column>
+
+          <p:column   style="text-align:center; font-size: 13px;" headerText="P. VENTA">
+              <h:outputText value="#{item_detalle_2.precioVenta}" />
+        </p:column>
+
+          <p:column   style="text-align:center; font-size: 13px;" headerText="DES.UNIT">
+              <h:outputText value="#{item_detalle_2.descuento}" />
+        </p:column>
+
+        <p:column   style="text-align:center; font-size: 13px;" headerText="SUB-TOT">
+            <h:outputText value="#{item_detalle_2.subTotal}" />
+        </p:column>
+
+    </p:dataTable>
+
+    </p:dialog>
+
+
+
+           </h:form>
+
+
+        
+    </p:panel>
+    </div>
+  </div>
+  <div class="clr"></div>
+
+  <div class="clr"></div>
+
+  <div class="clr"></div>
+</div>
+</h:body>
+</html>

@@ -24,24 +24,10 @@ import javax.persistence.Table;
 
 /**
  *
- * @author root : Zavaleta De la Cruz Yury Daniel
- * Copyright 2011 Zavaleta De la Cruz Yury Daniel
-
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
-
-       http://www.apache.org/licenses/LICENSE-2.0
-
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
-
+ * @author argos
  */
 @Entity
-@Table(name = "EMPLEADO", catalog = "sistema", schema = "")
+@Table(name = "empleado", catalog = "sistema", schema = "")
 @NamedQueries({
     @NamedQuery(name = "Empleado.findAll", query = "SELECT e FROM Empleado e"),
     @NamedQuery(name = "Empleado.findByIdEmpleado", query = "SELECT e FROM Empleado e WHERE e.idEmpleado = :idEmpleado"),
@@ -76,27 +62,27 @@ public class Empleado implements Serializable {
     @Basic(optional = false)
     @Column(name = "PASSWORD", nullable = false, length = 170)
     private String password;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "empleado", fetch = FetchType.LAZY)
-    private List<PagoCompraCredito> pagoCompraCreditoList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "empleado", fetch = FetchType.LAZY)
-    private List<ReporteDesratizacion> reporteDesratizacionList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "empleado", fetch = FetchType.LAZY)
-    private List<Venta> ventaList;
-    @OneToMany(mappedBy = "empleado", fetch = FetchType.LAZY)
-    private List<PagoVentaCredito> pagoVentaCreditoList;
     @OneToMany(mappedBy = "empleado", fetch = FetchType.LAZY)
     private List<PagoFacturaVentaCredito> pagoFacturaVentaCreditoList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "empleado", fetch = FetchType.LAZY)
-    private List<ReporteFumigacion> reporteFumigacionList;
+    private List<ReporteDesratizacion> reporteDesratizacionList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "empleado", fetch = FetchType.LAZY)
+    private List<PrestamoProductoTiendaUsuario> prestamoProductoTiendaUsuarioList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "empleado", fetch = FetchType.LAZY)
+    private List<PagoCompraCredito> pagoCompraCreditoList;
     @OneToMany(mappedBy = "empleado", fetch = FetchType.LAZY)
     private List<FacturaCompra> facturaCompraList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "empleado", fetch = FetchType.LAZY)
-    private List<PrestamoProductoTiendaUsuario> prestamoProductoTiendaUsuarioList;
+    private List<ReporteFumigacion> reporteFumigacionList;
+    @OneToMany(mappedBy = "empleado", fetch = FetchType.LAZY)
+    private List<PagoVentaCredito> pagoVentaCreditoList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "empleado", fetch = FetchType.LAZY)
+    private List<FacturaVenta> facturaVentaList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "empleado", fetch = FetchType.LAZY)
+    private List<Venta> ventaList;
     @JoinColumn(name = "ID_TIPO_EMPLEADO", referencedColumnName = "ID_TIPO_EMPLEADO", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private TipoEmpleado tipoEmpleado;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "empleado", fetch = FetchType.LAZY)
-    private List<FacturaVenta> facturaVentaList;
 
     public Empleado() {
     }
@@ -171,12 +157,12 @@ public class Empleado implements Serializable {
         this.password = password;
     }
 
-    public List<PagoCompraCredito> getPagoCompraCreditoList() {
-        return pagoCompraCreditoList;
+    public List<PagoFacturaVentaCredito> getPagoFacturaVentaCreditoList() {
+        return pagoFacturaVentaCreditoList;
     }
 
-    public void setPagoCompraCreditoList(List<PagoCompraCredito> pagoCompraCreditoList) {
-        this.pagoCompraCreditoList = pagoCompraCreditoList;
+    public void setPagoFacturaVentaCreditoList(List<PagoFacturaVentaCredito> pagoFacturaVentaCreditoList) {
+        this.pagoFacturaVentaCreditoList = pagoFacturaVentaCreditoList;
     }
 
     public List<ReporteDesratizacion> getReporteDesratizacionList() {
@@ -187,36 +173,20 @@ public class Empleado implements Serializable {
         this.reporteDesratizacionList = reporteDesratizacionList;
     }
 
-    public List<Venta> getVentaList() {
-        return ventaList;
+    public List<PrestamoProductoTiendaUsuario> getPrestamoProductoTiendaUsuarioList() {
+        return prestamoProductoTiendaUsuarioList;
     }
 
-    public void setVentaList(List<Venta> ventaList) {
-        this.ventaList = ventaList;
+    public void setPrestamoProductoTiendaUsuarioList(List<PrestamoProductoTiendaUsuario> prestamoProductoTiendaUsuarioList) {
+        this.prestamoProductoTiendaUsuarioList = prestamoProductoTiendaUsuarioList;
     }
 
-    public List<PagoVentaCredito> getPagoVentaCreditoList() {
-        return pagoVentaCreditoList;
+    public List<PagoCompraCredito> getPagoCompraCreditoList() {
+        return pagoCompraCreditoList;
     }
 
-    public void setPagoVentaCreditoList(List<PagoVentaCredito> pagoVentaCreditoList) {
-        this.pagoVentaCreditoList = pagoVentaCreditoList;
-    }
-
-    public List<PagoFacturaVentaCredito> getPagoFacturaVentaCreditoList() {
-        return pagoFacturaVentaCreditoList;
-    }
-
-    public void setPagoFacturaVentaCreditoList(List<PagoFacturaVentaCredito> pagoFacturaVentaCreditoList) {
-        this.pagoFacturaVentaCreditoList = pagoFacturaVentaCreditoList;
-    }
-
-    public List<ReporteFumigacion> getReporteFumigacionList() {
-        return reporteFumigacionList;
-    }
-
-    public void setReporteFumigacionList(List<ReporteFumigacion> reporteFumigacionList) {
-        this.reporteFumigacionList = reporteFumigacionList;
+    public void setPagoCompraCreditoList(List<PagoCompraCredito> pagoCompraCreditoList) {
+        this.pagoCompraCreditoList = pagoCompraCreditoList;
     }
 
     public List<FacturaCompra> getFacturaCompraList() {
@@ -227,20 +197,20 @@ public class Empleado implements Serializable {
         this.facturaCompraList = facturaCompraList;
     }
 
-    public List<PrestamoProductoTiendaUsuario> getPrestamoProductoTiendaUsuarioList() {
-        return prestamoProductoTiendaUsuarioList;
+    public List<ReporteFumigacion> getReporteFumigacionList() {
+        return reporteFumigacionList;
     }
 
-    public void setPrestamoProductoTiendaUsuarioList(List<PrestamoProductoTiendaUsuario> prestamoProductoTiendaUsuarioList) {
-        this.prestamoProductoTiendaUsuarioList = prestamoProductoTiendaUsuarioList;
+    public void setReporteFumigacionList(List<ReporteFumigacion> reporteFumigacionList) {
+        this.reporteFumigacionList = reporteFumigacionList;
     }
 
-    public TipoEmpleado getTipoEmpleado() {
-        return tipoEmpleado;
+    public List<PagoVentaCredito> getPagoVentaCreditoList() {
+        return pagoVentaCreditoList;
     }
 
-    public void setTipoEmpleado(TipoEmpleado tipoEmpleado) {
-        this.tipoEmpleado = tipoEmpleado;
+    public void setPagoVentaCreditoList(List<PagoVentaCredito> pagoVentaCreditoList) {
+        this.pagoVentaCreditoList = pagoVentaCreditoList;
     }
 
     public List<FacturaVenta> getFacturaVentaList() {
@@ -249,6 +219,22 @@ public class Empleado implements Serializable {
 
     public void setFacturaVentaList(List<FacturaVenta> facturaVentaList) {
         this.facturaVentaList = facturaVentaList;
+    }
+
+    public List<Venta> getVentaList() {
+        return ventaList;
+    }
+
+    public void setVentaList(List<Venta> ventaList) {
+        this.ventaList = ventaList;
+    }
+
+    public TipoEmpleado getTipoEmpleado() {
+        return tipoEmpleado;
+    }
+
+    public void setTipoEmpleado(TipoEmpleado tipoEmpleado) {
+        this.tipoEmpleado = tipoEmpleado;
     }
 
     @Override

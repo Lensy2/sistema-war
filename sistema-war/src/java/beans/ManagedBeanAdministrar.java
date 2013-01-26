@@ -1,3 +1,4 @@
+
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -28,9 +29,10 @@ import javax.faces.bean.SessionScoped;
 
  */
 
-
 @SessionScoped
 @ManagedBean
+
+
 public class ManagedBeanAdministrar implements Serializable{
 public ManagedBeanAdministrar() {
     }
@@ -58,7 +60,9 @@ public ManagedBeanAdministrar() {
             public String Tipo_Clientes(){
         return "tipo_clientes";
         }
-
+     public String Zona_clientes(){
+        return "zona_clientes";
+        }
 
         public String Tipo_Pruductos(){
         return "tipo_productos";
@@ -153,4 +157,6 @@ public ManagedBeanAdministrar() {
                     public String TipoServicios(){
         return "tipo_servicio";
         }
+
+                   
 }

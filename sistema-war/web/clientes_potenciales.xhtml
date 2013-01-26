@@ -6,7 +6,7 @@ and open the template in the editor.
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-          xmlns:p="http://primefaces.prime.com.tr/ui"
+          xmlns:p="http://primefaces.org/ui"  
       xmlns:f="http://java.sun.com/jsf/core">
 <h:head>
 <link rel="shortcut icon" href="favicon.ico" /> <title>Sistema Integrado</title>
@@ -33,15 +33,15 @@ and open the template in the editor.
   <div class="clr"></div>
   <div class="block_header">
     <div class="slider">
-    <p:growl id="growl" showDetail="true"/>
+    
     <p:panel header="M&oacute;dulo de Ventas - Captación de Clientes" >
         <h:form id="frmAlmacen" >
-
+<p:growl id="growl" showDetail="true"/>
             <center> <h:commandButton title="Nuevo Cliente" image="images/nuevo.png" action="#{managedBeanClientePonecial.nuevo}"/> </center>
 
     <p:separator />
 
-<h:panelGrid id="pnl1" columns="1">
+    <h:panelGrid id="pnl1" columns="1" style="width: 100%;">
 <center>
     <p:dataTable  style="width:100%" paginator="true" rows="100"   var="item" value="#{managedBeanClientePonecial.lista}" widgetVar="carsTable"
                                    emptyMessage="No se Encontraron datos"
@@ -64,6 +64,15 @@ and open the template in the editor.
             <h:outputText value="#{item.clienteRazonSocial}" />
         </p:column >
 
+        
+        
+        <p:column style="width:150px; font-size: 10px;text-align: center;" filterBy="#{item.telefono}"
+                headerText="TELEFONOS"
+                filterMatchMode="contains">
+            <h:outputText value="#{item.telefono}" />
+        </p:column >
+        
+        
 
   <p:column style="width:60px;font-size: 10px;text-align: center;"    headerText="Cumpleaños" >
       <h:outputText value="#{item.fechaCumpleanios}" >

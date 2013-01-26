@@ -6,7 +6,7 @@ and open the template in the editor.
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-          xmlns:p="http://primefaces.prime.com.tr/ui"
+          xmlns:p="http://primefaces.org/ui"  
       xmlns:f="http://java.sun.com/jsf/core">
 <h:head>
 <link rel="shortcut icon" href="favicon.ico" /> <title>Sistema Integrado</title>
@@ -43,6 +43,10 @@ and open the template in the editor.
 
  <h:outputText value="Cliente y/o Razón S." />
  <p:inputText size="35" id="cli1" style="color: blue; font-weight: bold;" value="#{managedBeanClientePonecial.cliente_potencial.clienteRazonSocial}" />
+ <h:outputText value="" />
+
+ <h:outputText value="TELEFONOS" />
+ <p:inputText size="35" id="telfs" style="color: green; font-weight: bold;" value="#{managedBeanClientePonecial.cliente_potencial.telefono}" />
  <h:outputText value="" />
 
   <h:outputText value="Cumpleaños:" />

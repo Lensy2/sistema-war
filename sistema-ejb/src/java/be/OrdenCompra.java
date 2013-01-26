@@ -28,24 +28,10 @@ import javax.persistence.TemporalType;
 
 /**
  *
- * @author root : Zavaleta De la Cruz Yury Daniel
- * Copyright 2011 Zavaleta De la Cruz Yury Daniel
-
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
-
-       http://www.apache.org/licenses/LICENSE-2.0
-
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
-
+ * @author argos
  */
 @Entity
-@Table(name = "ORDEN_COMPRA", catalog = "sistema", schema = "")
+@Table(name = "orden_compra", catalog = "sistema", schema = "")
 @NamedQueries({
     @NamedQuery(name = "OrdenCompra.findAll", query = "SELECT o FROM OrdenCompra o"),
     @NamedQuery(name = "OrdenCompra.findByIdOrdenCompra", query = "SELECT o FROM OrdenCompra o WHERE o.idOrdenCompra = :idOrdenCompra"),
@@ -78,14 +64,6 @@ public class OrdenCompra implements Serializable {
     @Basic(optional = false)
     @Column(name = "OBSERVACIONES", nullable = false, length = 300)
     private String observaciones;
-    @OneToMany(mappedBy = "ordenCompra", fetch = FetchType.LAZY)
-    private List<PagoCompraCredito> pagoCompraCreditoList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "ordenCompra", fetch = FetchType.LAZY)
-    private List<CanjeOrdenCompra> canjeOrdenCompraList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "ordenCompra", fetch = FetchType.LAZY)
-    private List<DetalleOrdenCompraProducto> detalleOrdenCompraProductoList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "ordenCompra", fetch = FetchType.LAZY)
-    private List<FacturaCompra> facturaCompraList;
     @JoinColumn(name = "ID_PROVEEDOR", referencedColumnName = "ID_PROVEEDOR")
     @ManyToOne(fetch = FetchType.LAZY)
     private Proveedor proveedor;
@@ -95,6 +73,14 @@ public class OrdenCompra implements Serializable {
     @JoinColumn(name = "ID_ESTADO_ORDEN_COMPRA", referencedColumnName = "ID_ESTADO_ORDEN_COMPRA", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private EstadoOrdenCompra estadoOrdenCompra;
+    @OneToMany(mappedBy = "ordenCompra", fetch = FetchType.LAZY)
+    private List<PagoCompraCredito> pagoCompraCreditoList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "ordenCompra", fetch = FetchType.LAZY)
+    private List<FacturaCompra> facturaCompraList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "ordenCompra", fetch = FetchType.LAZY)
+    private List<DetalleOrdenCompraProducto> detalleOrdenCompraProductoList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "ordenCompra", fetch = FetchType.LAZY)
+    private List<CanjeOrdenCompra> canjeOrdenCompraList;
 
     public OrdenCompra() {
     }
@@ -160,38 +146,6 @@ public class OrdenCompra implements Serializable {
         this.observaciones = observaciones;
     }
 
-    public List<PagoCompraCredito> getPagoCompraCreditoList() {
-        return pagoCompraCreditoList;
-    }
-
-    public void setPagoCompraCreditoList(List<PagoCompraCredito> pagoCompraCreditoList) {
-        this.pagoCompraCreditoList = pagoCompraCreditoList;
-    }
-
-    public List<CanjeOrdenCompra> getCanjeOrdenCompraList() {
-        return canjeOrdenCompraList;
-    }
-
-    public void setCanjeOrdenCompraList(List<CanjeOrdenCompra> canjeOrdenCompraList) {
-        this.canjeOrdenCompraList = canjeOrdenCompraList;
-    }
-
-    public List<DetalleOrdenCompraProducto> getDetalleOrdenCompraProductoList() {
-        return detalleOrdenCompraProductoList;
-    }
-
-    public void setDetalleOrdenCompraProductoList(List<DetalleOrdenCompraProducto> detalleOrdenCompraProductoList) {
-        this.detalleOrdenCompraProductoList = detalleOrdenCompraProductoList;
-    }
-
-    public List<FacturaCompra> getFacturaCompraList() {
-        return facturaCompraList;
-    }
-
-    public void setFacturaCompraList(List<FacturaCompra> facturaCompraList) {
-        this.facturaCompraList = facturaCompraList;
-    }
-
     public Proveedor getProveedor() {
         return proveedor;
     }
@@ -214,6 +168,38 @@ public class OrdenCompra implements Serializable {
 
     public void setEstadoOrdenCompra(EstadoOrdenCompra estadoOrdenCompra) {
         this.estadoOrdenCompra = estadoOrdenCompra;
+    }
+
+    public List<PagoCompraCredito> getPagoCompraCreditoList() {
+        return pagoCompraCreditoList;
+    }
+
+    public void setPagoCompraCreditoList(List<PagoCompraCredito> pagoCompraCreditoList) {
+        this.pagoCompraCreditoList = pagoCompraCreditoList;
+    }
+
+    public List<FacturaCompra> getFacturaCompraList() {
+        return facturaCompraList;
+    }
+
+    public void setFacturaCompraList(List<FacturaCompra> facturaCompraList) {
+        this.facturaCompraList = facturaCompraList;
+    }
+
+    public List<DetalleOrdenCompraProducto> getDetalleOrdenCompraProductoList() {
+        return detalleOrdenCompraProductoList;
+    }
+
+    public void setDetalleOrdenCompraProductoList(List<DetalleOrdenCompraProducto> detalleOrdenCompraProductoList) {
+        this.detalleOrdenCompraProductoList = detalleOrdenCompraProductoList;
+    }
+
+    public List<CanjeOrdenCompra> getCanjeOrdenCompraList() {
+        return canjeOrdenCompraList;
+    }
+
+    public void setCanjeOrdenCompraList(List<CanjeOrdenCompra> canjeOrdenCompraList) {
+        this.canjeOrdenCompraList = canjeOrdenCompraList;
     }
 
     @Override

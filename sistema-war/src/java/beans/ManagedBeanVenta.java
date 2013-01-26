@@ -40,10 +40,12 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.context.Flash;
 import javax.faces.event.ActionEvent;
+import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 import net.sf.jasperreports.crosstabs.fill.calculation.BucketDefinition.Bucket;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.event.UnselectEvent;
+import org.primefaces.model.SelectableDataModel;
 
 /**
  *
@@ -57,6 +59,8 @@ import org.primefaces.event.UnselectEvent;
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and  limitations under the License.
  */
+
+
 @ManagedBean
 @SessionScoped
 public class ManagedBeanVenta implements  Serializable {
@@ -103,6 +107,9 @@ private BigDecimal venta_total_detalles;
     private Date fecha_emision;
 
  
+    
+    private Modelo_Servicios_lista lista_modelos;
+    
     public ManagedBeanVenta() {
         venta = new Venta();
         venta.setDetalleVentaProductoList(new LinkedList<DetalleVentaProducto>());
@@ -117,8 +124,47 @@ private BigDecimal venta_total_detalles;
         fecha_busqueda = new Date();
         fecha_emision = new Date();
         lista_detalles_mostrar= new LinkedList<DetalleVentaProducto>();
+        lista_modelos = new Modelo_Servicios_lista();
     }
 
+    public Modelo_Servicios_lista getLista_modelos() {
+        
+        lista = new LinkedList<Venta>();
+       for(Venta v : ventaFacade.findAll()){
+       if(v.getTipoVenta().getIdTipoVenta()==3 && (v.getEstadoVenta().getIdEstadoVenta()== 4 || v.getEstadoVenta().getIdEstadoVenta()== 6 || v.getEstadoVenta().getIdEstadoVenta()== 9))
+       {
+       lista.add(v);
+       }
+       }
+
+        lista_modelos = new Modelo_Servicios_lista(lista);
+        return lista_modelos;
+    }
+
+    public Modelo_Servicios_lista getLista_modelos_sin_filtrar() {
+
+        lista = new LinkedList<Venta>();
+
+        lista = ventaFacade.findAll();
+        // AQUI PUEDES PONERLE SOLO PARA SERVICIOS
+      /* for(Venta v : ventaFacade.findAll()){
+       if(v.getTipoVenta().getIdTipoVenta()==3 && (v.getEstadoVenta().getIdEstadoVenta()== 4 || v.getEstadoVenta().getIdEstadoVenta()== 6))
+       {
+       lista.add(v);
+       }
+       }
+*/
+        lista_modelos = new Modelo_Servicios_lista(lista);
+        return lista_modelos;
+    }
+
+
+    public void setLista_modelos(Modelo_Servicios_lista lista_modelos) {
+        this.lista_modelos = lista_modelos;
+    }
+
+    
+    
     public List<DetalleVentaProducto> getLista_detalles_mostrar() {
         return lista_detalles_mostrar;
     }
@@ -222,16 +268,28 @@ public String Almacen(){
 return "almacen";
 }
 
+public void llenar_myclientes(){
+    try {
+
+        for(Cliente p : clienteFacade.findAll()){
+         myclientes.put(p.getIdCliente(), p);
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+
+}
 
     public String Nueva_venta(){
     venta = new Venta();
  
-    
+    venta.setFacturaRelacionada("");
 
     // Aqui tienes que agregar al empleado de la empresa que usa el sistema en ese momento
     venta.setEmpleado(new Empleado(1));
     venta.setEstadoVenta(new EstadoVenta(1));
     venta.setObservaciones("");
+    venta.setCliente(clienteFacade.find(1));
     venta.setTienda(new Tienda(1));
     venta.setTipoVenta(new TipoVenta(1));
     venta.setTotalVenta(new BigDecimal("0"));
@@ -258,6 +316,7 @@ venta_total_detalles = new BigDecimal(0);
     // Aqui tienes que agregar al empleado de la empresa que usa el sistema en ese momento
     venta.setEmpleado(new Empleado(1));
     venta.setEstadoVenta(new EstadoVenta(1));
+   // venta.setCliente(clienteFacade.find(1));
     venta.setObservaciones("");
     venta.setTienda(new Tienda(1));
     venta.setTipoVenta(new TipoVenta(2));
@@ -419,6 +478,42 @@ venta_total_detalles = this.calcular_total_venta();
 
 
 
+public void AgregarDetalleServicio_FinalDZ(){
+    //Solo cuando es nulo
+
+if(Existe_duplicado_detalle(detalle_venta_Producto)) {
+       FacesMessage msg = new FacesMessage("Duplicado", "El Producto ya ha sido Ingresado");
+            FacesContext.getCurrentInstance().addMessage(null, msg);
+}
+else {
+ BigDecimal cantidad =  new BigDecimal(detalle_venta_Producto.getCantidad());
+ detalle_venta_Producto.setSubTotal((detalle_venta_Producto.getPrecioVenta().subtract(detalle_venta_Producto.getDescuento())).multiply(cantidad));
+    DetalleVentaProducto dt = new DetalleVentaProducto();
+ dt = detalle_venta_Producto;
+
+ //asignandole el tipo de servicio
+venta.setObservaciones(detalle_venta_Producto.getProducto().getTipoProducto().getNombreTipoProducto());
+
+
+ dt.setVenta(venta);
+ lista_detalles.add(dt);
+    Producto p = new Producto();
+    p = detalle_venta_Producto.getProducto();
+    detalle_venta_Producto = new DetalleVentaProducto();
+    detalle_venta_Producto.setProducto(p);
+    detalle_venta_Producto.setCantidad(1);
+detalle_venta_Producto.setDescuento(new BigDecimal("0"));
+detalle_venta_Producto.setPrecioVenta(new BigDecimal("0"));
+venta_total_detalles = this.calcular_total_venta();
+// te quedaste aqui
+}
+
+
+
+}
+
+
+
 public void AgregarDetalleProducto_Mejorado(){
     //Solo cuando es nulo
 if(venta.getIdVenta()==null){
@@ -548,7 +643,7 @@ int comp;
         for(Venta v : ventaFacade.findAll())
               {
              comp = v.getTotalVenta().compareTo(cero);
-            if(v.getEstadoVenta().getIdEstadoVenta()==2 && (comp ==1) ){
+            if((v.getEstadoVenta().getIdEstadoVenta()==2 || v.getEstadoVenta().getIdEstadoVenta()==6 || v.getEstadoVenta().getIdEstadoVenta()==7) && (comp ==1) ){
             lista.add(v);
             }
                }
@@ -783,7 +878,10 @@ total_venta = total_venta.add(dt.getSubTotal());
 
      return "realizar_trabajo?faces-redirect=true";
      }
+ public String Volver_Contratos(){
 
+     return "contratos?faces-redirect=true";
+     }
      public void formatearVenta(){
     if(venta.getIdVenta()%999999==0){
     venta.setNumeroVenta(999999);
@@ -912,16 +1010,20 @@ ExternalContext extContext = FacesContext.getCurrentInstance().getExternalContex
 
 
 public String ListaServicios(){
+    venta = new Venta();
+    venta.setEstadoVenta(new EstadoVenta(1, "", ""));
 return "lista_servicios_pendientes";
 
 }
 
 public String Trabajos(){
+     venta = new Venta();
 return "realizar_trabajo";
 
 }
     public String Nueva_venta_servicios(){
     venta = new Venta();
+    venta.setFacturaRelacionada("");
     // Aqui tienes que agregar al empleado de la empresa que usa el sistema en ese momento
     venta.setEmpleado(new Empleado(1));
     venta.setEstadoVenta(new EstadoVenta(4));
@@ -980,9 +1082,13 @@ public String VerActividades(){
   public void destroyWorld(ActionEvent actionEvent){
 
         try {
-             this.editar2();
+
+            
+            this.editar2();
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Acción ejecutada con éxito",  "Se ejecutó con éxito");
         FacesContext.getCurrentInstance().addMessage(null, message);
+
+
 
         } catch (Exception e) {
    e.printStackTrace();
@@ -1010,5 +1116,54 @@ public String VerActividades(){
    public String contratos(){
     return "contratos";
     }
+   
+   
+   
+   
+   
+   
+   
+   
+   public  class Modelo_Servicios_lista extends ListDataModel<Venta> implements SelectableDataModel<Venta>, Serializable{
+
+        public Modelo_Servicios_lista() {
+        }
+
+
+
+    public Modelo_Servicios_lista(List<Venta> data) {
+        super(data);
+    }
+
+     @Override
+    public Venta getRowData(String rowKey) {
+        //In a real app, a more efficient way like a query by rowKey should be implemented to deal with huge data
+
+    List<Venta> servicios = (List<Venta>)this.getWrappedData();
+
+        // List<OrdenSalidaDetalleAlmacenProductos> ordenes = ordenSalidaDetalleAlmacenProductosFacade.findAll();
+
+         
+        for(Venta v : servicios) {
+            if(v.getIdVenta().toString().equalsIgnoreCase(rowKey))
+               
+            {
+                return v;
+            }
+        }
+
+        return null;
+    }
+
+    @Override
+    public Object getRowKey(Venta venta) {
+        return venta.getIdVenta();
+    }
+
+
+
+    }
+
+   
 }
 

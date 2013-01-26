@@ -6,7 +6,7 @@ and open the template in the editor.
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-          xmlns:p="http://primefaces.prime.com.tr/ui"  
+          xmlns:p="http://primefaces.org/ui"    
       xmlns:f="http://java.sun.com/jsf/core">
 <h:head>
 <link rel="shortcut icon" href="favicon.ico" /> <title>Sistema Integrado</title>
@@ -33,10 +33,12 @@ and open the template in the editor.
   <div class="clr"></div>
   <div class="block_header">
     <div class="slider">
-    <p:growl id="growl" showDetail="true"/>
+   
     <p:panel header="M&oacute;dulo de Ventas" >
 
           <h:form id="frm11">
+               <p:growl id="growl" showDetail="true"/>
+    <p:growl id="messages" showDetail="true"/>
         <p:fieldset toggleable="true" toggleSpeed="500" id="fielset"  legend="Datos de la Venta" style="margin-top:5px">
                 <h:panelGrid id="pnlg1" columns="3" cellpadding="5">
                     <h:outputText value="Nombre de la Tienda. " />
@@ -61,13 +63,12 @@ and open the template in the editor.
 
 <h:outputText value="Nombre del Cliente : "/>
 
- <p:autoComplete id="auroxcomplete_cliente"
+<p:autoComplete required="true" id="autocomplete_cliente"
                  value="#{managedBeanVenta.venta.cliente}"
                  completeMethod="#{managedBeanVenta.completar_filtrado_Clientes}"
                  var="item_cliente" itemLabel="#{item_cliente.nombreCliente}"
                   itemValue="#{item_cliente}"
-                 
-               converter="clienteConverter"  minQueryLength="3"
+                                converter="clienteConverter"  minQueryLength="3"
                size="42"
                 />
  <h:outputText value=""/>
@@ -89,7 +90,7 @@ and open the template in the editor.
 
 
     <p:fieldset  toggleable="true" toggleSpeed="500" id="fielset2"  legend="Ingreso de Productos" style="margin-top:5px">
-<p:growl id="messages" showDetail="true"/>
+
         <h:panelGrid id="pnlg34" columns="3" cellpadding="5" >
 
 
@@ -124,7 +125,7 @@ and open the template in the editor.
  </h:panelGrid>
     </p:fieldset>
 
-        <p:fieldset  toggleable="true" toggleSpeed="500" id="fielset3"  legend="Lista de Productos" style="margin-top:5px">
+    <p:fieldset  toggleable="true" toggleSpeed="500" id="fielset3"  legend="Lista de Productos" style="margin-top:5px">
     <p:growl id="messages2" />
             <p:dataTable var="item" value="#{managedBeanVenta.lista_detalles}" id="detalleslist" >
 
@@ -179,10 +180,10 @@ and open the template in the editor.
 
 
         <p:column headerText="" style="width:100px">
-            <p:commandButton title="Editar éste Producto" image="ui-icon ui-icon-arrowrefresh-1-w"  action="#{managedBeanVenta.EliminarLista}" update="frm11" >
+            <p:commandButton title="Editar éste Producto" icon="ui-icon ui-icon-arrowrefresh-1-w"  action="#{managedBeanVenta.EliminarLista}" update=":frm11" >
                 <f:setPropertyActionListener value="#{item}" target="#{managedBeanVenta.detalle_venta_Producto}" />
             </p:commandButton>
-            <p:commandButton title="Eliminar éste Producto" image="ui-icon ui-icon-close"  action="#{managedBeanVenta.EliminarLista}" update="frm11" >
+            <p:commandButton title="Eliminar éste Producto" icon="ui-icon ui-icon-close"  action="#{managedBeanVenta.EliminarLista}" update=":frm11" >
                 <f:setPropertyActionListener value="#{item}" target="#{managedBeanVenta.detalle_venta_Producto}" />
             </p:commandButton>
 
@@ -198,7 +199,18 @@ and open the template in the editor.
     </p:fieldset>
 <br />
 <center>  <h:commandButton value="Terminar Venta" action="#{managedBeanVenta.editar_guardar_venta_FinalDZ}" />  </center>
-         </h:form>
+         <script type="text/javascript">
+        function borrar() {
+//var myObjs = document.getElementById("frm11:txt_codigo_barras"); // get element by tag name
+//alert('mi senior');
+alert('mi senior');
+   document.getElementById("frm11:autocomplete_cliente").value="";
+alert('estoy aqui');
+  }
+
+    </script>
+
+          </h:form>
   <p:separator />
     </p:panel>
     </div>

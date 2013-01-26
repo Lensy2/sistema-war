@@ -28,24 +28,10 @@ import javax.persistence.TemporalType;
 
 /**
  *
- * @author root : Zavaleta De la Cruz Yury Daniel
- * Copyright 2011 Zavaleta De la Cruz Yury Daniel
-
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
-
-       http://www.apache.org/licenses/LICENSE-2.0
-
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
-
+ * @author argos
  */
 @Entity
-@Table(name = "CANJE_ORDEN_COMPRA", catalog = "sistema", schema = "")
+@Table(name = "canje_orden_compra", catalog = "sistema", schema = "")
 @NamedQueries({
     @NamedQuery(name = "CanjeOrdenCompra.findAll", query = "SELECT c FROM CanjeOrdenCompra c"),
     @NamedQuery(name = "CanjeOrdenCompra.findByIdCanjeOrdenCompra", query = "SELECT c FROM CanjeOrdenCompra c WHERE c.idCanjeOrdenCompra = :idCanjeOrdenCompra"),
@@ -86,14 +72,14 @@ public class CanjeOrdenCompra implements Serializable {
     @Basic(optional = false)
     @Column(name = "OBSERVACIONES", nullable = false, length = 300)
     private String observaciones;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "canjeOrdenCompra", fetch = FetchType.LAZY)
+    private List<LetrasPagoCanje> letrasPagoCanjeList;
     @JoinColumn(name = "ID_ESTADO_CANJE_ORDEN_COMPRA", referencedColumnName = "ID_ESTADO_CANJE_ORDEN_COMPRA")
     @ManyToOne(fetch = FetchType.LAZY)
     private EstadoCanjeOrdenCompra estadoCanjeOrdenCompra;
     @JoinColumn(name = "ID_ORDEN_COMPRA", referencedColumnName = "ID_ORDEN_COMPRA", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private OrdenCompra ordenCompra;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "canjeOrdenCompra", fetch = FetchType.LAZY)
-    private List<LetrasPagoCanje> letrasPagoCanjeList;
 
     public CanjeOrdenCompra() {
     }
@@ -177,6 +163,14 @@ public class CanjeOrdenCompra implements Serializable {
         this.observaciones = observaciones;
     }
 
+    public List<LetrasPagoCanje> getLetrasPagoCanjeList() {
+        return letrasPagoCanjeList;
+    }
+
+    public void setLetrasPagoCanjeList(List<LetrasPagoCanje> letrasPagoCanjeList) {
+        this.letrasPagoCanjeList = letrasPagoCanjeList;
+    }
+
     public EstadoCanjeOrdenCompra getEstadoCanjeOrdenCompra() {
         return estadoCanjeOrdenCompra;
     }
@@ -191,14 +185,6 @@ public class CanjeOrdenCompra implements Serializable {
 
     public void setOrdenCompra(OrdenCompra ordenCompra) {
         this.ordenCompra = ordenCompra;
-    }
-
-    public List<LetrasPagoCanje> getLetrasPagoCanjeList() {
-        return letrasPagoCanjeList;
-    }
-
-    public void setLetrasPagoCanjeList(List<LetrasPagoCanje> letrasPagoCanjeList) {
-        this.letrasPagoCanjeList = letrasPagoCanjeList;
     }
 
     @Override

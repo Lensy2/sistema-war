@@ -21,24 +21,10 @@ import javax.persistence.TemporalType;
 
 /**
  *
- * @author root : Zavaleta De la Cruz Yury Daniel
- * Copyright 2011 Zavaleta De la Cruz Yury Daniel
-
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
-
-       http://www.apache.org/licenses/LICENSE-2.0
-
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
-
+ * @author argos
  */
 @Entity
-@Table(name = "CLIENTE_POTENCIAL", catalog = "sistema", schema = "")
+@Table(name = "cliente_potencial", catalog = "sistema", schema = "")
 @NamedQueries({
     @NamedQuery(name = "ClientePotencial.findAll", query = "SELECT c FROM ClientePotencial c"),
     @NamedQuery(name = "ClientePotencial.findByIdClientePotencial", query = "SELECT c FROM ClientePotencial c WHERE c.idClientePotencial = :idClientePotencial"),
@@ -47,7 +33,8 @@ import javax.persistence.TemporalType;
     @NamedQuery(name = "ClientePotencial.findByFechaCumpleanios", query = "SELECT c FROM ClientePotencial c WHERE c.fechaCumpleanios = :fechaCumpleanios"),
     @NamedQuery(name = "ClientePotencial.findByDireccion", query = "SELECT c FROM ClientePotencial c WHERE c.direccion = :direccion"),
     @NamedQuery(name = "ClientePotencial.findByDni", query = "SELECT c FROM ClientePotencial c WHERE c.dni = :dni"),
-    @NamedQuery(name = "ClientePotencial.findByEstado", query = "SELECT c FROM ClientePotencial c WHERE c.estado = :estado")})
+    @NamedQuery(name = "ClientePotencial.findByEstado", query = "SELECT c FROM ClientePotencial c WHERE c.estado = :estado"),
+    @NamedQuery(name = "ClientePotencial.findByTelefono", query = "SELECT c FROM ClientePotencial c WHERE c.telefono = :telefono")})
 public class ClientePotencial implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -75,6 +62,9 @@ public class ClientePotencial implements Serializable {
     @Basic(optional = false)
     @Column(name = "ESTADO", nullable = false)
     private int estado;
+    @Basic(optional = false)
+    @Column(name = "TELEFONO", nullable = false, length = 50)
+    private String telefono;
 
     public ClientePotencial() {
     }
@@ -83,7 +73,7 @@ public class ClientePotencial implements Serializable {
         this.idClientePotencial = idClientePotencial;
     }
 
-    public ClientePotencial(Integer idClientePotencial, Date fechaRegistro, String clienteRazonSocial, Date fechaCumpleanios, String direccion, String dni, int estado) {
+    public ClientePotencial(Integer idClientePotencial, Date fechaRegistro, String clienteRazonSocial, Date fechaCumpleanios, String direccion, String dni, int estado, String telefono) {
         this.idClientePotencial = idClientePotencial;
         this.fechaRegistro = fechaRegistro;
         this.clienteRazonSocial = clienteRazonSocial;
@@ -91,6 +81,7 @@ public class ClientePotencial implements Serializable {
         this.direccion = direccion;
         this.dni = dni;
         this.estado = estado;
+        this.telefono = telefono;
     }
 
     public Integer getIdClientePotencial() {
@@ -147,6 +138,14 @@ public class ClientePotencial implements Serializable {
 
     public void setEstado(int estado) {
         this.estado = estado;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
     }
 
     @Override

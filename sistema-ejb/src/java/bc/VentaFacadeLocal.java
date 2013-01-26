@@ -11,7 +11,7 @@ import javax.ejb.Local;
 
 /**
  *
- * @author root
+ * @author argos
  */
 @Local
 public interface VentaFacadeLocal {

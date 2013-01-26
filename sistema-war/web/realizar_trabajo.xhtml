@@ -6,7 +6,7 @@ and open the template in the editor.
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-          xmlns:p="http://primefaces.prime.com.tr/ui"
+          xmlns:p="http://primefaces.org/ui"  
       xmlns:f="http://java.sun.com/jsf/core">
 <h:head>
 <link rel="shortcut icon" href="favicon.ico" /> <title>Sistema Integrado</title>
@@ -43,7 +43,7 @@ and open the template in the editor.
 
 
 
-            <p:dataTable  id="tabla_principal" paginator="true" rows="100"   var="item" value="#{managedBeanVenta.listaFiltrada}" widgetVar="carsTable"
+            <p:dataTable  id="tabla_principal" paginator="true" rows="100"   var="item" value="#{managedBeanVenta.lista_modelos}" widgetVar="carsTable"
             emptyMessage="No se Encontraron datos"
             selection="#{managedBeanVenta.venta}" selectionMode="single"
             >
@@ -51,17 +51,16 @@ and open the template in the editor.
                 <p:ajax event="rowSelect" listener="#{managedBeanVenta.onRowSelect}"
                     update=":frm_button:display :frm_button:growl" oncomplete="carDialog.show()" />
                 <p:ajax event="rowUnselect" listener="#{managedBeanVenta.onRowUnselect}" update=":frm_button:growl"/>
-                <p:ajax event="rowDblselect" listener="#{managedBeanVenta.onRowDblselect}" />
-
+              
 
          <f:facet name="header">
             Lista de servicios, Pendientes a terminar.
         </f:facet>
 
          <p:column style="width:40px;text-align:center; font-size: 10px;"
-                headerText="ID">
+                headerText="VENTA">
 
-             <h:outputText value="#{managedBeanVenta.Formato(item)}" />
+             <h:outputText style="color: red;" value="#{managedBeanVenta.Formato(item)}" />
 
 
              </p:column>

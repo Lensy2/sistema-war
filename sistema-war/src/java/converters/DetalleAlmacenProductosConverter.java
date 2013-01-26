@@ -1,3 +1,4 @@
+
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -68,7 +69,14 @@ return detalle;
 
     if (context == null){throw new NullPointerException("context");}
 if (component == null){throw new NullPointerException("component");}
-return ((DetalleAlmacenProductos)value).getIdDetalleAlmacenProductos().toString();
+if (value == null || value.equals("")) {
+            return "";
+        } else {
+            return String.valueOf(((DetalleAlmacenProductos) value).getIdDetalleAlmacenProductos());
+        }
+    
+  //  return ((DetalleAlmacenProductos)value).getIdDetalleAlmacenProductos().toString();
+
     }
 
 

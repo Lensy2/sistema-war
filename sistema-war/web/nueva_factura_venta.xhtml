@@ -6,7 +6,7 @@ and open the template in the editor.
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-          xmlns:p="http://primefaces.prime.com.tr/ui"  
+          xmlns:p="http://primefaces.org/ui"    
       xmlns:f="http://java.sun.com/jsf/core">
 <h:head>
 <link rel="shortcut icon" href="favicon.ico" /> <title>Sistema Integrado</title>
@@ -61,7 +61,7 @@ and open the template in the editor.
 
 <h:outputText value="Nombre del Cliente : "/>
 
- <p:autoComplete id="auroxcomplete_cliente"
+<p:autoComplete required="true" id="auroxcomplete_cliente"
                  value="#{managedBeanFacturaVenta.factura.cliente}"
                  completeMethod="#{managedBeanVenta.completar_filtrado_Clientes}"
                  var="item_cliente" itemLabel="#{item_cliente.nombreCliente}"
@@ -193,10 +193,10 @@ and open the template in the editor.
 
 
         <p:column headerText="" style="width:100px">
-            <p:commandButton title="Editar éste Producto" image="ui-icon ui-icon-arrowrefresh-1-w"  action="#{managedBeanFacturaVenta.EliminarLista}" update="frm11" >
+            <p:commandButton title="Editar éste Producto" icon="ui-icon ui-icon-arrowrefresh-1-w"  action="#{managedBeanFacturaVenta.EliminarLista}" update=":frm11" >
                 <f:setPropertyActionListener value="#{item}" target="#{managedBeanFacturaVenta.detalle_factura_venta_Producto}" />
             </p:commandButton>
-            <p:commandButton title="Eliminar éste Producto" image="ui-icon ui-icon-close"  action="#{managedBeanFacturaVenta.EliminarLista}" update="frm11" >
+            <p:commandButton title="Eliminar éste Producto" icon="ui-icon ui-icon-close"  action="#{managedBeanFacturaVenta.EliminarLista}" update=":frm11" >
                 <f:setPropertyActionListener value="#{item}" target="#{managedBeanFacturaVenta.detalle_factura_venta_Producto}" />
             </p:commandButton>
 

@@ -1,3 +1,4 @@
+
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -12,7 +13,9 @@ import javax.ejb.EJB;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 
 import javax.enterprise.inject.Model;
@@ -50,6 +53,7 @@ import org.primefaces.model.ScheduleModel;
    limitations under the License.
 
  */
+
 @ManagedBean
 @SessionScoped
 public class ManagedBeanActividad implements Serializable{
@@ -105,6 +109,7 @@ public class ManagedBeanActividad implements Serializable{
     }
 
     public List<Actividad> getLista_domingo() {
+         this.getLista_ordenada(lista_domingo);
         return lista_domingo;
     }
 
@@ -113,6 +118,7 @@ public class ManagedBeanActividad implements Serializable{
     }
 
     public List<Actividad> getLista_jueves() {
+         this.getLista_ordenada(lista_jueves);
         return lista_jueves;
     }
 
@@ -121,6 +127,7 @@ public class ManagedBeanActividad implements Serializable{
     }
 
     public List<Actividad> getLista_lunes() {
+         this.getLista_ordenada(lista_lunes);
         return lista_lunes;
     }
 
@@ -129,6 +136,7 @@ public class ManagedBeanActividad implements Serializable{
     }
 
     public List<Actividad> getLista_martes() {
+         this.getLista_ordenada(lista_martes);
         return lista_martes;
     }
 
@@ -137,6 +145,7 @@ public class ManagedBeanActividad implements Serializable{
     }
 
     public List<Actividad> getLista_miercoles() {
+         this.getLista_ordenada(lista_miercoles);
         return lista_miercoles;
     }
 
@@ -145,6 +154,7 @@ public class ManagedBeanActividad implements Serializable{
     }
 
     public List<Actividad> getLista_sabado() {
+         this.getLista_ordenada(lista_sabado);
         return lista_sabado;
     }
 
@@ -153,6 +163,7 @@ public class ManagedBeanActividad implements Serializable{
     }
 
     public List<Actividad> getLista_viernes() {
+        this.getLista_ordenada(lista_viernes);
         return lista_viernes;
     }
 
@@ -299,6 +310,19 @@ public void addEvent(ActionEvent actionEvent) {
         //lista = actividadFacade.findAll();
                return lista;
     }
+    
+    public List<Actividad> getListaTotalSemana() {
+        lista = new LinkedList<Actividad>();
+        lista.addAll(lista_lunes);
+        lista.addAll(lista_martes);
+        lista.addAll(lista_miercoles);
+        lista.addAll(lista_jueves);
+        lista.addAll(lista_viernes);
+        lista.addAll(lista_sabado);
+        lista.addAll(lista_domingo);
+        this.getLista_ordenada(lista);
+               return lista;
+    }
 
     public void filtrar() {
         lista = new LinkedList<Actividad>();
@@ -356,7 +380,14 @@ public void addEvent(ActionEvent actionEvent) {
        
           }
           }
-          //  lista = actividadFacade.findAll();
+     /*     this.getLista_ordenada(lista_lunes);
+         this.getLista_ordenada(lista_martes);
+         this.getLista_ordenada(lista_miercoles);
+         this.getLista_ordenada(lista_jueves);
+         this.getLista_ordenada(lista_viernes);
+         this.getLista_ordenada(lista_sabado);
+         this.getLista_ordenada(lista_domingo);*/
+
         } catch (Exception e) {
         }
 
@@ -486,5 +517,57 @@ private Calendar today() {
     return t.getTime();
         }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+          public void getLista_ordenada(List<Actividad>  lista) {
+              int size = lista.size();
+              List<Actividad> no_ordenada = new ArrayList<Actividad>();
+         List<Actividad> ordenada = new ArrayList<Actividad>();
+         no_ordenada = lista;
+          Actividad act = new Actividad();
+              if(size > 1){
+
+                for(int i =0 ; i< size; i++){
+                 act =this.ultimo(no_ordenada);
+                 ordenada.add(act);
+            //     no_ordenada.remove(act);
+                }
+                  
+              }
+// esta es
+    // ordenada.addAll(lista);
+      
+
+
+          // aqui se agrega al ultimo a la lista.
+     lista.addAll(ordenada);
+          }
+
+
+
+           public Actividad ultimo (List<Actividad>  lista_) {
+           Actividad uno = lista_.get(0);
+           int size = lista_.size();
+               for(int i =0 ; i< size; i++)
+           {
+                 if(lista_.get(i).getFecha().before(uno.getFecha())){
+                 uno = lista_.get(i);
+                                  }
+           }
+
+         lista_.remove(uno);
+               return uno;
+          }
 
 }

@@ -6,7 +6,7 @@ and open the template in the editor.
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-          xmlns:p="http://primefaces.prime.com.tr/ui"  
+          xmlns:p="http://primefaces.org/ui"    
       xmlns:f="http://java.sun.com/jsf/core">
 <h:head>
 <link rel="shortcut icon" href="favicon.ico" /> <title>Sistema Integrado</title>
@@ -33,17 +33,19 @@ and open the template in the editor.
   <div class="clr"></div>
   <div class="block_header">
     <div class="slider">
-    <p:growl id="growl" showDetail="true"/>
+    
     <p:panel header="M&oacute;dulo de Almac&eacute;n" >
         <h:form id="frmAlmacen" >
+<p:growl id="growl" showDetail="true"/>
 
-
-<h:panelGrid id="pnl1" columns="1">
+<h:panelGrid id="pnl1" columns="1" style="width: 100%;">
 <center>
     <p:dataTable  style="width:100%" paginator="true" rows="10"   var="item" value="#{managedBeanStock.listaTotales}" widgetVar="carsTable"
-                  selection="#{managedBeanStock.stockProductoTiendaOrigen}"  selectionMode="single"
-                  emptyMessage="No se Encontraron datos"
+                            emptyMessage="No se Encontraron datos"
                   >
+
+
+                 
 
          <f:facet name="header">
              Seleccione una Opci&oacute;n de Filtrado
@@ -76,8 +78,12 @@ and open the template in the editor.
                 headerText="op.">
 
             
-<p:commandButton value="Ver" image="ui-icon ui-icon-search"
-                              update="frmAlmacen:display " oncomplete="carDialog.show()" />
+<p:commandButton value="Ver" icon="ui-icon ui-icon-search"
+                 update=":frmAlmacen:display " oncomplete="carDialog.show()" >
+    
+     <f:setPropertyActionListener value="#{item}" target="#{managedBeanStock.stockProductoTiendaOrigen}" />
+                      
+</p:commandButton>
 
         </p:column >
 
@@ -85,7 +91,7 @@ and open the template in the editor.
                 </center>
             </h:panelGrid>
 
-      <p:dialog header="PRODUCTO SELECCIONADO" widgetVar="carDialog" resizable="false"
+      <p:dialog id="dialog" header="PRODUCTO SELECCIONADO" widgetVar="carDialog" resizable="false"
               width="450" showEffect="clip" hideEffect="fold">
 
         <h:panelGrid id="display" columns="2" cellpadding="4">

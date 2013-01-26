@@ -1,3 +1,4 @@
+
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -105,7 +106,7 @@ estadoventa = new EstadoVenta();
         lista = estadoVentaFacade.findAll();
         for(EstadoVenta p: lista){
 
-        if (p.getIdEstadoVenta()>3 && p.getIdEstadoVenta()< 8 ){
+        if (p.getIdEstadoVenta()>3  ){
             myestadoventas.put(p.getIdEstadoVenta(), p);
             estadoventaItems.add(new SelectItem(p, p.getNombreTestadoVenta()));
             }
