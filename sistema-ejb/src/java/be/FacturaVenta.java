@@ -28,10 +28,24 @@ import javax.persistence.TemporalType;
 
 /**
  *
- * @author argos
+ * @author root : Zavaleta De la Cruz Yury Daniel
+ * Copyright 2011 Zavaleta De la Cruz Yury Daniel
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+
  */
 @Entity
-@Table(name = "factura_venta", catalog = "sistema", schema = "")
+@Table(name = "FACTURA_VENTA", catalog = "sistema", schema = "")
 @NamedQueries({
     @NamedQuery(name = "FacturaVenta.findAll", query = "SELECT f FROM FacturaVenta f"),
     @NamedQuery(name = "FacturaVenta.findByIdFacturaVenta", query = "SELECT f FROM FacturaVenta f WHERE f.idFacturaVenta = :idFacturaVenta"),
@@ -76,12 +90,12 @@ public class FacturaVenta implements Serializable {
     @Basic(optional = false)
     @Column(name = "TOTAL_PAGOS_CREDITO", nullable = false, precision = 9, scale = 2)
     private BigDecimal totalPagosCredito;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "facturaVenta", fetch = FetchType.LAZY)
+    private List<GuiaRemicion> guiaRemicionList;
     @OneToMany(mappedBy = "facturaVenta", fetch = FetchType.LAZY)
     private List<PagoFacturaVentaCredito> pagoFacturaVentaCreditoList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "facturaVenta", fetch = FetchType.LAZY)
     private List<DetalleFacturaVentaProducto> detalleFacturaVentaProductoList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "facturaVenta", fetch = FetchType.LAZY)
-    private List<GuiaRemicion> guiaRemicionList;
     @JoinColumn(name = "ID_IGV_FACTURA", referencedColumnName = "ID_IGV_FACTURA", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private IgvFactura igvFactura;
@@ -192,6 +206,14 @@ public class FacturaVenta implements Serializable {
         this.totalPagosCredito = totalPagosCredito;
     }
 
+    public List<GuiaRemicion> getGuiaRemicionList() {
+        return guiaRemicionList;
+    }
+
+    public void setGuiaRemicionList(List<GuiaRemicion> guiaRemicionList) {
+        this.guiaRemicionList = guiaRemicionList;
+    }
+
     public List<PagoFacturaVentaCredito> getPagoFacturaVentaCreditoList() {
         return pagoFacturaVentaCreditoList;
     }
@@ -206,14 +228,6 @@ public class FacturaVenta implements Serializable {
 
     public void setDetalleFacturaVentaProductoList(List<DetalleFacturaVentaProducto> detalleFacturaVentaProductoList) {
         this.detalleFacturaVentaProductoList = detalleFacturaVentaProductoList;
-    }
-
-    public List<GuiaRemicion> getGuiaRemicionList() {
-        return guiaRemicionList;
-    }
-
-    public void setGuiaRemicionList(List<GuiaRemicion> guiaRemicionList) {
-        this.guiaRemicionList = guiaRemicionList;
     }
 
     public IgvFactura getIgvFactura() {

@@ -18,10 +18,24 @@ import javax.persistence.Table;
 
 /**
  *
- * @author argos
+ * @author root : Zavaleta De la Cruz Yury Daniel
+ * Copyright 2011 Zavaleta De la Cruz Yury Daniel
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+
  */
 @Entity
-@Table(name = "tipo_plaga", catalog = "sistema", schema = "")
+@Table(name = "TIPO_PLAGA", catalog = "sistema", schema = "")
 @NamedQueries({
     @NamedQuery(name = "TipoPlaga.findAll", query = "SELECT t FROM TipoPlaga t"),
     @NamedQuery(name = "TipoPlaga.findByIdTipoPlaga", query = "SELECT t FROM TipoPlaga t WHERE t.idTipoPlaga = :idTipoPlaga"),

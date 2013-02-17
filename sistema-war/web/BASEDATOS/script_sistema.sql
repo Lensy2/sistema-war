@@ -1536,6 +1536,16 @@ REFERENCES PRODUCTO (ID_PRODUCTO)
 
 
 
+DELIMITER //
+CREATE PROCEDURE RESETEAR_SISTEMA()
+ BEGIN
+drop database sistema;
+create database sistema;
+
+ END //
+DELIMITER ;
+
+
 
 
 

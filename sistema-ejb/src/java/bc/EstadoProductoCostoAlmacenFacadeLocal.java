@@ -11,7 +11,7 @@ import javax.ejb.Local;
 
 /**
  *
- * @author argos
+ * @author root
  */
 @Local
 public interface EstadoProductoCostoAlmacenFacadeLocal {

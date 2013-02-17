@@ -24,10 +24,24 @@ import javax.persistence.Table;
 
 /**
  *
- * @author argos
+ * @author root : Zavaleta De la Cruz Yury Daniel
+ * Copyright 2011 Zavaleta De la Cruz Yury Daniel
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+
  */
 @Entity
-@Table(name = "materia_prima", catalog = "sistema", schema = "")
+@Table(name = "MATERIA_PRIMA", catalog = "sistema", schema = "")
 @NamedQueries({
     @NamedQuery(name = "MateriaPrima.findAll", query = "SELECT m FROM MateriaPrima m"),
     @NamedQuery(name = "MateriaPrima.findByIdMateriaPrima", query = "SELECT m FROM MateriaPrima m WHERE m.idMateriaPrima = :idMateriaPrima"),
@@ -46,17 +60,17 @@ public class MateriaPrima implements Serializable {
     @Basic(optional = false)
     @Column(name = "DESCRIPCION", nullable = false, length = 200)
     private String descripcion;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "materiaPrima", fetch = FetchType.LAZY)
-    private List<IngresoMateriaPrimaTienda> ingresoMateriaPrimaTiendaList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "materiaPrima", fetch = FetchType.LAZY)
-    private List<DetalleFormulacionInsumos> detalleFormulacionInsumosList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "materiaPrima", fetch = FetchType.LAZY)
-    private List<StockMateriaPrimaTiendaOrigen> stockMateriaPrimaTiendaOrigenList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "materiaPrima", fetch = FetchType.LAZY)
-    private List<SalidaMateriaPrimaTienda> salidaMateriaPrimaTiendaList;
     @JoinColumn(name = "ID_UNIDAD_MEDIDA", referencedColumnName = "ID_UNIDAD_MEDIDA")
     @ManyToOne(fetch = FetchType.LAZY)
     private UnidadMedida unidadMedida;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "materiaPrima", fetch = FetchType.LAZY)
+    private List<IngresoMateriaPrimaTienda> ingresoMateriaPrimaTiendaList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "materiaPrima", fetch = FetchType.LAZY)
+    private List<SalidaMateriaPrimaTienda> salidaMateriaPrimaTiendaList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "materiaPrima", fetch = FetchType.LAZY)
+    private List<StockMateriaPrimaTiendaOrigen> stockMateriaPrimaTiendaOrigenList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "materiaPrima", fetch = FetchType.LAZY)
+    private List<DetalleFormulacionInsumos> detalleFormulacionInsumosList;
 
     public MateriaPrima() {
     }
@@ -95,28 +109,20 @@ public class MateriaPrima implements Serializable {
         this.descripcion = descripcion;
     }
 
+    public UnidadMedida getUnidadMedida() {
+        return unidadMedida;
+    }
+
+    public void setUnidadMedida(UnidadMedida unidadMedida) {
+        this.unidadMedida = unidadMedida;
+    }
+
     public List<IngresoMateriaPrimaTienda> getIngresoMateriaPrimaTiendaList() {
         return ingresoMateriaPrimaTiendaList;
     }
 
     public void setIngresoMateriaPrimaTiendaList(List<IngresoMateriaPrimaTienda> ingresoMateriaPrimaTiendaList) {
         this.ingresoMateriaPrimaTiendaList = ingresoMateriaPrimaTiendaList;
-    }
-
-    public List<DetalleFormulacionInsumos> getDetalleFormulacionInsumosList() {
-        return detalleFormulacionInsumosList;
-    }
-
-    public void setDetalleFormulacionInsumosList(List<DetalleFormulacionInsumos> detalleFormulacionInsumosList) {
-        this.detalleFormulacionInsumosList = detalleFormulacionInsumosList;
-    }
-
-    public List<StockMateriaPrimaTiendaOrigen> getStockMateriaPrimaTiendaOrigenList() {
-        return stockMateriaPrimaTiendaOrigenList;
-    }
-
-    public void setStockMateriaPrimaTiendaOrigenList(List<StockMateriaPrimaTiendaOrigen> stockMateriaPrimaTiendaOrigenList) {
-        this.stockMateriaPrimaTiendaOrigenList = stockMateriaPrimaTiendaOrigenList;
     }
 
     public List<SalidaMateriaPrimaTienda> getSalidaMateriaPrimaTiendaList() {
@@ -127,12 +133,20 @@ public class MateriaPrima implements Serializable {
         this.salidaMateriaPrimaTiendaList = salidaMateriaPrimaTiendaList;
     }
 
-    public UnidadMedida getUnidadMedida() {
-        return unidadMedida;
+    public List<StockMateriaPrimaTiendaOrigen> getStockMateriaPrimaTiendaOrigenList() {
+        return stockMateriaPrimaTiendaOrigenList;
     }
 
-    public void setUnidadMedida(UnidadMedida unidadMedida) {
-        this.unidadMedida = unidadMedida;
+    public void setStockMateriaPrimaTiendaOrigenList(List<StockMateriaPrimaTiendaOrigen> stockMateriaPrimaTiendaOrigenList) {
+        this.stockMateriaPrimaTiendaOrigenList = stockMateriaPrimaTiendaOrigenList;
+    }
+
+    public List<DetalleFormulacionInsumos> getDetalleFormulacionInsumosList() {
+        return detalleFormulacionInsumosList;
+    }
+
+    public void setDetalleFormulacionInsumosList(List<DetalleFormulacionInsumos> detalleFormulacionInsumosList) {
+        this.detalleFormulacionInsumosList = detalleFormulacionInsumosList;
     }
 
     @Override
