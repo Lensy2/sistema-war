@@ -28,10 +28,24 @@ import javax.persistence.TemporalType;
 
 /**
  *
- * @author argos
+ * @author root : Zavaleta De la Cruz Yury Daniel
+ * Copyright 2011 Zavaleta De la Cruz Yury Daniel
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+
  */
 @Entity
-@Table(name = "contrato_fumigacion", catalog = "sistema", schema = "")
+@Table(name = "CONTRATO_FUMIGACION", catalog = "sistema", schema = "")
 @NamedQueries({
     @NamedQuery(name = "ContratoFumigacion.findAll", query = "SELECT c FROM ContratoFumigacion c"),
     @NamedQuery(name = "ContratoFumigacion.findByIdContratoFumigacion", query = "SELECT c FROM ContratoFumigacion c WHERE c.idContratoFumigacion = :idContratoFumigacion"),
@@ -77,15 +91,15 @@ public class ContratoFumigacion implements Serializable {
     @Basic(optional = false)
     @Column(name = "SALDO", nullable = false, precision = 9, scale = 2)
     private BigDecimal saldo;
-    @JoinColumn(name = "ID_VENTA", referencedColumnName = "ID_VENTA", nullable = false)
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private Venta venta;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "contratoFumigacion", fetch = FetchType.LAZY)
-    private List<ReporteDesratizacion> reporteDesratizacionList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "contratoFumigacion", fetch = FetchType.LAZY)
     private List<DetalleFumigacionProducto> detalleFumigacionProductoList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "contratoFumigacion", fetch = FetchType.LAZY)
+    private List<ReporteDesratizacion> reporteDesratizacionList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "contratoFumigacion", fetch = FetchType.LAZY)
     private List<ReporteFumigacion> reporteFumigacionList;
+    @JoinColumn(name = "ID_VENTA", referencedColumnName = "ID_VENTA", nullable = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private Venta venta;
 
     public ContratoFumigacion() {
     }
@@ -178,12 +192,12 @@ public class ContratoFumigacion implements Serializable {
         this.saldo = saldo;
     }
 
-    public Venta getVenta() {
-        return venta;
+    public List<DetalleFumigacionProducto> getDetalleFumigacionProductoList() {
+        return detalleFumigacionProductoList;
     }
 
-    public void setVenta(Venta venta) {
-        this.venta = venta;
+    public void setDetalleFumigacionProductoList(List<DetalleFumigacionProducto> detalleFumigacionProductoList) {
+        this.detalleFumigacionProductoList = detalleFumigacionProductoList;
     }
 
     public List<ReporteDesratizacion> getReporteDesratizacionList() {
@@ -194,20 +208,20 @@ public class ContratoFumigacion implements Serializable {
         this.reporteDesratizacionList = reporteDesratizacionList;
     }
 
-    public List<DetalleFumigacionProducto> getDetalleFumigacionProductoList() {
-        return detalleFumigacionProductoList;
-    }
-
-    public void setDetalleFumigacionProductoList(List<DetalleFumigacionProducto> detalleFumigacionProductoList) {
-        this.detalleFumigacionProductoList = detalleFumigacionProductoList;
-    }
-
     public List<ReporteFumigacion> getReporteFumigacionList() {
         return reporteFumigacionList;
     }
 
     public void setReporteFumigacionList(List<ReporteFumigacion> reporteFumigacionList) {
         this.reporteFumigacionList = reporteFumigacionList;
+    }
+
+    public Venta getVenta() {
+        return venta;
+    }
+
+    public void setVenta(Venta venta) {
+        this.venta = venta;
     }
 
     @Override

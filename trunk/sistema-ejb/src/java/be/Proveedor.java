@@ -23,10 +23,24 @@ import javax.persistence.Table;
 
 /**
  *
- * @author argos
+ * @author root : Zavaleta De la Cruz Yury Daniel
+ * Copyright 2011 Zavaleta De la Cruz Yury Daniel
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+
  */
 @Entity
-@Table(name = "proveedor", catalog = "sistema", schema = "")
+@Table(name = "PROVEEDOR", catalog = "sistema", schema = "")
 @NamedQueries({
     @NamedQuery(name = "Proveedor.findAll", query = "SELECT p FROM Proveedor p"),
     @NamedQuery(name = "Proveedor.findByIdProveedor", query = "SELECT p FROM Proveedor p WHERE p.idProveedor = :idProveedor"),
@@ -61,11 +75,11 @@ public class Proveedor implements Serializable {
     @Basic(optional = false)
     @Column(name = "CORREO", nullable = false, length = 68)
     private String correo;
-    @OneToMany(mappedBy = "proveedor", fetch = FetchType.LAZY)
-    private List<OrdenCompra> ordenCompraList;
     @JoinColumn(name = "ID_TIPO_PROVEEDOR", referencedColumnName = "ID_TIPO_PROVEEDOR")
     @ManyToOne(fetch = FetchType.LAZY)
     private TipoProveedor tipoProveedor;
+    @OneToMany(mappedBy = "proveedor", fetch = FetchType.LAZY)
+    private List<OrdenCompra> ordenCompraList;
 
     public Proveedor() {
     }
@@ -140,20 +154,20 @@ public class Proveedor implements Serializable {
         this.correo = correo;
     }
 
-    public List<OrdenCompra> getOrdenCompraList() {
-        return ordenCompraList;
-    }
-
-    public void setOrdenCompraList(List<OrdenCompra> ordenCompraList) {
-        this.ordenCompraList = ordenCompraList;
-    }
-
     public TipoProveedor getTipoProveedor() {
         return tipoProveedor;
     }
 
     public void setTipoProveedor(TipoProveedor tipoProveedor) {
         this.tipoProveedor = tipoProveedor;
+    }
+
+    public List<OrdenCompra> getOrdenCompraList() {
+        return ordenCompraList;
+    }
+
+    public void setOrdenCompraList(List<OrdenCompra> ordenCompraList) {
+        this.ordenCompraList = ordenCompraList;
     }
 
     @Override

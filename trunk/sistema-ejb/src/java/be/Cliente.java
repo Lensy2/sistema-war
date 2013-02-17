@@ -24,10 +24,24 @@ import javax.persistence.Table;
 
 /**
  *
- * @author argos
+ * @author root : Zavaleta De la Cruz Yury Daniel
+ * Copyright 2011 Zavaleta De la Cruz Yury Daniel
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+
  */
 @Entity
-@Table(name = "cliente", catalog = "sistema", schema = "")
+@Table(name = "CLIENTE", catalog = "sistema", schema = "")
 @NamedQueries({
     @NamedQuery(name = "Cliente.findAll", query = "SELECT c FROM Cliente c"),
     @NamedQuery(name = "Cliente.findByIdCliente", query = "SELECT c FROM Cliente c WHERE c.idCliente = :idCliente"),
@@ -79,7 +93,15 @@ public class Cliente implements Serializable {
     @Column(name = "CORREO", nullable = false, length = 250)
     private String correo;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "cliente", fetch = FetchType.LAZY)
+    private List<Venta> ventaList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cliente", fetch = FetchType.LAZY)
+    private List<OrdenSalidaDetalleAlmacenProductos> ordenSalidaDetalleAlmacenProductosList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cliente", fetch = FetchType.LAZY)
     private List<Actividad> actividadList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cliente", fetch = FetchType.LAZY)
+    private List<FacturaVenta> facturaVentaList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cliente", fetch = FetchType.LAZY)
+    private List<OrdenSalidaDetalleAlmacenProductosCostos> ordenSalidaDetalleAlmacenProductosCostosList;
     @JoinColumn(name = "ID_ZONA_CIUDAD", referencedColumnName = "ID_ZONA_CIUDAD", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private ZonaCiudad zonaCiudad;
@@ -89,14 +111,6 @@ public class Cliente implements Serializable {
     @JoinColumn(name = "ID_MERCADO", referencedColumnName = "ID_MERCADO", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Mercado mercado;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cliente", fetch = FetchType.LAZY)
-    private List<OrdenSalidaDetalleAlmacenProductosCostos> ordenSalidaDetalleAlmacenProductosCostosList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cliente", fetch = FetchType.LAZY)
-    private List<FacturaVenta> facturaVentaList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cliente", fetch = FetchType.LAZY)
-    private List<Venta> ventaList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cliente", fetch = FetchType.LAZY)
-    private List<OrdenSalidaDetalleAlmacenProductos> ordenSalidaDetalleAlmacenProductosList;
 
     public Cliente() {
     }
@@ -207,12 +221,44 @@ public class Cliente implements Serializable {
         this.correo = correo;
     }
 
+    public List<Venta> getVentaList() {
+        return ventaList;
+    }
+
+    public void setVentaList(List<Venta> ventaList) {
+        this.ventaList = ventaList;
+    }
+
+    public List<OrdenSalidaDetalleAlmacenProductos> getOrdenSalidaDetalleAlmacenProductosList() {
+        return ordenSalidaDetalleAlmacenProductosList;
+    }
+
+    public void setOrdenSalidaDetalleAlmacenProductosList(List<OrdenSalidaDetalleAlmacenProductos> ordenSalidaDetalleAlmacenProductosList) {
+        this.ordenSalidaDetalleAlmacenProductosList = ordenSalidaDetalleAlmacenProductosList;
+    }
+
     public List<Actividad> getActividadList() {
         return actividadList;
     }
 
     public void setActividadList(List<Actividad> actividadList) {
         this.actividadList = actividadList;
+    }
+
+    public List<FacturaVenta> getFacturaVentaList() {
+        return facturaVentaList;
+    }
+
+    public void setFacturaVentaList(List<FacturaVenta> facturaVentaList) {
+        this.facturaVentaList = facturaVentaList;
+    }
+
+    public List<OrdenSalidaDetalleAlmacenProductosCostos> getOrdenSalidaDetalleAlmacenProductosCostosList() {
+        return ordenSalidaDetalleAlmacenProductosCostosList;
+    }
+
+    public void setOrdenSalidaDetalleAlmacenProductosCostosList(List<OrdenSalidaDetalleAlmacenProductosCostos> ordenSalidaDetalleAlmacenProductosCostosList) {
+        this.ordenSalidaDetalleAlmacenProductosCostosList = ordenSalidaDetalleAlmacenProductosCostosList;
     }
 
     public ZonaCiudad getZonaCiudad() {
@@ -237,38 +283,6 @@ public class Cliente implements Serializable {
 
     public void setMercado(Mercado mercado) {
         this.mercado = mercado;
-    }
-
-    public List<OrdenSalidaDetalleAlmacenProductosCostos> getOrdenSalidaDetalleAlmacenProductosCostosList() {
-        return ordenSalidaDetalleAlmacenProductosCostosList;
-    }
-
-    public void setOrdenSalidaDetalleAlmacenProductosCostosList(List<OrdenSalidaDetalleAlmacenProductosCostos> ordenSalidaDetalleAlmacenProductosCostosList) {
-        this.ordenSalidaDetalleAlmacenProductosCostosList = ordenSalidaDetalleAlmacenProductosCostosList;
-    }
-
-    public List<FacturaVenta> getFacturaVentaList() {
-        return facturaVentaList;
-    }
-
-    public void setFacturaVentaList(List<FacturaVenta> facturaVentaList) {
-        this.facturaVentaList = facturaVentaList;
-    }
-
-    public List<Venta> getVentaList() {
-        return ventaList;
-    }
-
-    public void setVentaList(List<Venta> ventaList) {
-        this.ventaList = ventaList;
-    }
-
-    public List<OrdenSalidaDetalleAlmacenProductos> getOrdenSalidaDetalleAlmacenProductosList() {
-        return ordenSalidaDetalleAlmacenProductosList;
-    }
-
-    public void setOrdenSalidaDetalleAlmacenProductosList(List<OrdenSalidaDetalleAlmacenProductos> ordenSalidaDetalleAlmacenProductosList) {
-        this.ordenSalidaDetalleAlmacenProductosList = ordenSalidaDetalleAlmacenProductosList;
     }
 
     @Override

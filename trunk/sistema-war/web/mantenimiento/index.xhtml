@@ -204,8 +204,15 @@ and open the template in the editor.
 
             
 
+             <h:panelGroup>
+                 <h:commandLink title="ASIGNAR CODIGO" action="#{managedBeanCodificacion.nueva}"  >
+            <h:graphicImage width="135 px" height="100 px" value="${pageContext.request.contextPath}/images/codigo.jpg" alt="" title="" style="border-width:0px;"/>
+            </h:commandLink><br/>
+            <h:commandLink  styleClass="datagrid_centrar" value="ASIGNAR CODIGO" action="#{managedBeanCodificacion.nueva}"/>
+            </h:panelGroup>
 
 
+            
          </h:panelGrid>
 
            
