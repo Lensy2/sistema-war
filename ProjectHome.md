@@ -1,0 +1,1 @@
+Este es un proyecto que tiene como motivación la construcción de un software robusto y estable, que soporte los procesos principales de un ERP
